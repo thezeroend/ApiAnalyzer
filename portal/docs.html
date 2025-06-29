@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Documentação - API Log Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav a:hover, .nav a.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .section h3 { color: #555; margin: 20px 0 10px 0; font-size: 1.2em; }
+        .section p { margin-bottom: 15px; line-height: 1.6; color: #666; }
+        .section ul, .section ol { margin: 15px 0; padding-left: 20px; }
+        .section li { margin-bottom: 8px; line-height: 1.5; color: #666; }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .endpoint {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .method {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        .method.get { background: #61affe; color: white; }
+        .method.post { background: #49cc90; color: white; }
+        .method.put { background: #fca130; color: white; }
+        .method.delete { background: #f93e3e; color: white; }
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #495057;
+        }
+        .endpoint-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .endpoint-params {
+            margin-top: 15px;
+        }
+        .param {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .param:last-child { border-bottom: none; }
+        .param-name {
+            font-weight: 600;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        .param-type {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #495057;
+        }
+        .param-description {
+            color: #666;
+            font-size: 0.9em;
+            flex: 1;
+            text-align: right;
+        }
+        .example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .example h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .response-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+        }
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .feature-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .feature-description {
+            color: #666;
+            line-height: 1.5;
+        }
+        .toc {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .toc h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        .toc li {
+            margin-bottom: 8px;
+        }
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        .toc a:hover {
+            color: #764ba2;
+        }
+        .toc a::before {
+            content: "📄 ";
+            margin-right: 5px;
+        }
+        .highlight {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight strong {
+            color: #856404;
+        }
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .endpoint-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .param {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .param-description {
+                text-align: left;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Documentação</h1>
+            <p>Guia completo do sistema de análise de anomalias em logs de API</p>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">🏠 Início</a></li>
+                <li><a href="detector.html">🔍 Detector</a></li>
+                <li><a href="feedback.html">🏷️ Feedback</a></li>
+                <li><a href="config.html">⚙️ Configurações</a></li>
+                <li><a href="timeline.html">📊 Timeline</a></li>
+                <li><a href="docs.html" class="active">📚 Documentação</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h3>📋 Índice</h3>
+                <ul>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#features">Funcionalidades</a></li>
+                    <li><a href="#architecture">Arquitetura</a></li>
+                    <li><a href="#api-endpoints">Endpoints da API</a></li>
+                    <li><a href="#ml-models">Modelos de Machine Learning</a></li>
+                    <li><a href="#feedback-system">Sistema de Feedback</a></li>
+                    <li><a href="#configuration">Configurações</a></li>
+                    <li><a href="#usage-examples">Exemplos de Uso</a></li>
+                    <li><a href="#troubleshooting">Solução de Problemas</a></li>
+                </ul>
+            </div>
+
+            <!-- Visão Geral -->
+            <div class="section" id="overview">
+                <h2>🎯 Visão Geral</h2>
+                <p>O <strong>API Log Analyzer</strong> é um sistema avançado de detecção de anomalias em logs de API que utiliza Machine Learning para identificar padrões suspeitos e comportamentos anômalos em tempo real.</p>
+                
+                <div class="highlight">
+                    <strong>Principais Benefícios:</strong>
+                    <ul>
+                        <li>🔍 Detecção automática de anomalias usando múltiplos algoritmos ML</li>
+                        <li>📊 Interface web intuitiva para análise e feedback</li>
+                        <li>🔄 Sistema de feedback para melhorar a precisão</li>
+                        <li>⚙️ Configurações flexíveis e personalizáveis</li>
+                        <li>📈 Estatísticas detalhadas e relatórios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Funcionalidades -->
+            <div class="section" id="features">
+                <h2>🚀 Funcionalidades</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">Detecção de Anomalias</div>
+                        <div class="feature-description">
+                            Detecta automaticamente padrões anômalos em logs de API usando algoritmos de Machine Learning como Isolation Forest, Local Outlier Factor e One-Class SVM.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Dashboard Interativo</div>
+                        <div class="feature-description">
+                            Interface web moderna para visualizar anomalias, estatísticas e gerenciar o sistema de forma intuitiva.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🏷️</div>
+                        <div class="feature-title">Sistema de Feedback</div>
+                        <div class="feature-description">
+                            Permite marcar falsos positivos e verdadeiros positivos para melhorar continuamente a precisão do modelo.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-title">Retreinamento Automático</div>
+                        <div class="feature-description">
+                            Retreina automaticamente os modelos com base no feedback recebido, melhorando a precisão ao longo do tempo.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <div class="feature-title">Configurações Flexíveis</div>
+                        <div class="feature-description">
+                            Ajuste thresholds, parâmetros de modelos e configurações do sistema através da interface web.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <div class="feature-title">Análise Estatística</div>
+                        <div class="feature-description">
+                            Estatísticas detalhadas sobre detecções, feedback e performance dos modelos de ML.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arquitetura -->
+            <div class="section" id="architecture">
+                <h2>🏗️ Arquitetura</h2>
+                
+                <h3>Componentes do Sistema</h3>
+                <ul>
+                    <li><strong>Backend (FastAPI):</strong> API REST para processamento de logs e ML</li>
+                    <li><strong>Frontend (HTML/JavaScript):</strong> Interface web responsiva</li>
+                    <li><strong>Banco de Dados (MongoDB):</strong> Armazenamento de logs e feedback</li>
+                    <li><strong>ML Pipeline:</strong> Pipeline de processamento e detecção</li>
+                    <li><strong>Sistema de Feedback:</strong> Gerenciamento de feedback e retreinamento</li>
+                </ul>
+
+                <h3>Fluxo de Processamento</h3>
+                <ol>
+                    <li>Logs são enviados via API REST</li>
+                    <li>Dados são processados e features extraídas</li>
+                    <li>Modelos ML analisam os dados</li>
+                    <li>Anomalias são detectadas e pontuadas</li>
+                    <li>Resultados são exibidos na interface</li>
+                    <li>Feedback é coletado e processado</li>
+                    <li>Modelos são retreinados periodicamente</li>
+                </ol>
+            </div>
+
+            <!-- Endpoints da API -->
+            <div class="section" id="api-endpoints">
+                <h2>🔌 Endpoints da API</h2>
+                
+                <h3>Logs</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/logs/</span>
+                    </div>
+                    <div class="endpoint-description">Envia logs de API para análise</div>
+                    <div class="endpoint-params">
+                        <div class="param">
+                            <span class="param-name">apiId</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">ID da API</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">clientId</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">ID do cliente</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">method</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">Método HTTP</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">path</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">Caminho da requisição</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">status</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Status HTTP</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">responseTime</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Tempo de resposta (ms)</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">ip</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">IP do cliente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>Exemplo de Requisição:</h4>
+                        <div class="code-block">
+{
+  "apiId": "api_example",
+  "clientId": "client_123",
+  "method": "GET",
+  "path": "/api/users",
+  "status": 200,
+  "responseTime": 150,
+  "ip": "192.168.1.100"
+}
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Machine Learning</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/ml/train</span>
+                    </div>
+                    <div class="endpoint-description">Treina modelos de ML com logs existentes</div>
+                    <div class="endpoint-params">
+                        <div class="param">
+                            <span class="param-name">apiId</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">ID da API (opcional)</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">hours_back</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Horas para trás (padrão: 24)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/ml/detect</span>
+                    </div>
+                    <div class="endpoint-description">Detecta anomalias em logs recentes</div>
+                    <div class="endpoint-params">
+                        <div class="param">
+                            <span class="param-name">apiId</span>
+                            <span class="param-type">string</span>
+                            <span class="param-description">ID da API (opcional)</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">hours_back</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Horas para trás (padrão: 24)</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">threshold</span>
+                            <span class="param-type">float</span>
+                            <span class="param-description">Threshold de anomalia (padrão: configurado)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Feedback</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/feedback/false-positive</span>
+                    </div>
+                    <div class="endpoint-description">Marca uma anomalia como falso positivo</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/feedback/true-positive</span>
+                    </div>
+                    <div class="endpoint-description">Marca uma anomalia como verdadeiro positivo</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/feedback/stats</span>
+                    </div>
+                    <div class="endpoint-description">Obtém estatísticas de feedback</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/feedback/history</span>
+                    </div>
+                    <div class="endpoint-description">Obtém histórico de feedback</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-url">/feedback/retrain</span>
+                    </div>
+                    <div class="endpoint-description">Retreina modelos com feedback</div>
+                </div>
+
+                <h3>Configurações</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-url">/config/</span>
+                    </div>
+                    <div class="endpoint-description">Obtém configurações atuais</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-url">/config/</span>
+                    </div>
+                    <div class="endpoint-description">Atualiza configurações</div>
+                </div>
+            </div>
+
+            <!-- Modelos de Machine Learning -->
+            <div class="section" id="ml-models">
+                <h2>🤖 Modelos de Machine Learning</h2>
+                
+                <h3>Algoritmos Implementados</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌲</div>
+                        <div class="feature-title">Isolation Forest</div>
+                        <div class="feature-description">
+                            Algoritmo baseado em árvores que detecta anomalias isolando pontos anômalos em subespaços de features.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Local Outlier Factor</div>
+                        <div class="feature-description">
+                            Detecta anomalias baseado na densidade local dos dados, identificando pontos com densidade significativamente menor.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">One-Class SVM</div>
+                        <div class="feature-description">
+                            Algoritmo que aprende a fronteira de decisão para dados normais e identifica outliers como anomalias.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Features Utilizadas</h3>
+                <ul>
+                    <li><strong>responseTime:</strong> Tempo de resposta da API</li>
+                    <li><strong>status:</strong> Código de status HTTP</li>
+                    <li><strong>method:</strong> Método HTTP (convertido para numérico)</li>
+                    <li><strong>path_length:</strong> Comprimento do caminho da requisição</li>
+                    <li><strong>hour:</strong> Hora da requisição (0-23)</li>
+                    <li><strong>day_of_week:</strong> Dia da semana (0-6)</li>
+                    <li><strong>ip_features:</strong> Features extraídas do IP</li>
+                </ul>
+            </div>
+
+            <!-- Sistema de Feedback -->
+            <div class="section" id="feedback-system">
+                <h2>🏷️ Sistema de Feedback</h2>
+                
+                <p>O sistema de feedback permite melhorar continuamente a precisão dos modelos de ML através de feedback humano.</p>
+                
+                <h3>Tipos de Feedback</h3>
+                <ul>
+                    <li><strong>Falso Positivo:</strong> Quando o sistema detecta uma anomalia que não é real</li>
+                    <li><strong>Verdadeiro Positivo:</strong> Quando o sistema detecta corretamente uma anomalia real</li>
+                </ul>
+
+                <h3>Processo de Retreinamento</h3>
+                <ol>
+                    <li>Usuário marca anomalias como falsos/verdadeiros positivos</li>
+                    <li>Feedback é armazenado no banco de dados</li>
+                    <li>Sistema coleta logs marcados como falsos positivos</li>
+                    <li>Modelos são retreinados incluindo esses logs como dados normais</li>
+                    <li>Novos modelos são salvos e utilizados para próximas detecções</li>
+                </ol>
+
+                <div class="highlight">
+                    <strong>Benefícios:</strong>
+                    <ul>
+                        <li>Reduz falsos positivos ao longo do tempo</li>
+                        <li>Melhora a precisão geral do sistema</li>
+                        <li>Adapta-se às características específicas da aplicação</li>
+                        <li>Permite personalização para diferentes contextos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Configurações -->
+            <div class="section" id="configuration">
+                <h2>⚙️ Configurações</h2>
+                
+                <h3>Parâmetros Configuráveis</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-url">/config/</span>
+                    </div>
+                    <div class="endpoint-description">Atualiza configurações do sistema</div>
+                    <div class="endpoint-params">
+                        <div class="param">
+                            <span class="param-name">anomaly_threshold</span>
+                            <span class="param-type">float</span>
+                            <span class="param-description">Threshold para detecção de anomalias (0.0-1.0)</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">retrain_interval_hours</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Intervalo para retreinamento automático</span>
+                        </div>
+                        <div class="param">
+                            <span class="param-name">min_feedback_for_retrain</span>
+                            <span class="param-type">integer</span>
+                            <span class="param-description">Mínimo de feedbacks para retreinamento</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Configurações Padrão</h3>
+                <div class="code-block">
+{
+  "anomaly_threshold": 0.12,
+  "retrain_interval_hours": 24,
+  "min_feedback_for_retrain": 10,
+  "max_logs_for_training": 10000,
+  "feature_scaling": true,
+  "model_persistence": true
+}
+                </div>
+            </div>
+
+            <!-- Exemplos de Uso -->
+            <div class="section" id="usage-examples">
+                <h2>💡 Exemplos de Uso</h2>
+                
+                <h3>1. Enviando Logs</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/logs/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiId": "api_production",
+    "clientId": "mobile_app_001",
+    "method": "POST",
+    "path": "/api/orders",
+    "status": 201,
+    "responseTime": 250,
+    "ip": "192.168.1.100"
+  }'
+                </div>
+
+                <h3>2. Treinando Modelos</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/ml/train" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiId": "api_production",
+    "hours_back": 48
+  }'
+                </div>
+
+                <h3>3. Detectando Anomalias</h3>
+                <div class="code-block">
+curl -X GET "http://localhost:8000/ml/detect?apiId=api_production&hours_back=24"
+                </div>
+
+                <h3>4. Marcando Falso Positivo</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/feedback/false-positive" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "log_id": "log_12345",
+    "api_id": "api_production",
+    "user_comment": "Comportamento normal para este cliente",
+    "anomaly_score": 0.85,
+    "features": {"responseTime": 150, "status": 200}
+  }'
+                </div>
+
+                <h3>5. Retreinando com Feedback</h3>
+                <div class="code-block">
+curl -X POST "http://localhost:8000/feedback/retrain" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "api_id": "api_production"
+  }'
+                </div>
+            </div>
+
+            <!-- Solução de Problemas -->
+            <div class="section" id="troubleshooting">
+                <h2>🔧 Solução de Problemas</h2>
+                
+                <h3>Problemas Comuns</h3>
+                
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">❌</span>
+                        <span class="endpoint-url">Erro 404 - Endpoint não encontrado</span>
+                    </div>
+                    <div class="endpoint-description">
+                        <strong>Solução:</strong> Verifique se o backend está rodando e se a URL está correta.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">❌</span>
+                        <span class="endpoint-url">Erro 422 - Validação falhou</span>
+                    </div>
+                    <div class="endpoint-description">
+                        <strong>Solução:</strong> Verifique se todos os campos obrigatórios estão presentes e com tipos corretos.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">❌</span>
+                        <span class="endpoint-url">Nenhuma anomalia detectada</span>
+                    </div>
+                    <div class="endpoint-description">
+                        <strong>Solução:</strong> Verifique se há logs suficientes e se o threshold não está muito alto.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">❌</span>
+                        <span class="endpoint-url">Muitos falsos positivos</span>
+                    </div>
+                    <div class="endpoint-description">
+                        <strong>Solução:</strong> Ajuste o threshold, marque falsos positivos e retreine o modelo.
+                    </div>
+                </div>
+
+                <h3>Logs de Debug</h3>
+                <p>Para habilitar logs detalhados, execute o backend com:</p>
+                <div class="code-block">
+uvicorn main:app --reload --log-level debug
+                </div>
+
+                <h3>Verificação de Saúde</h3>
+                <p>Teste se o sistema está funcionando:</p>
+                <div class="code-block">
+curl -X GET "http://localhost:8000/health"
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

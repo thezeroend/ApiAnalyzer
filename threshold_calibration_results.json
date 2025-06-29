@@ -1,0 +1,236 @@
+[
+  {
+    "threshold": 0.01,
+    "anomalies_detected": 670,
+    "true_positives": 50,
+    "false_positives": 620,
+    "precision": 0.07462686567164178,
+    "recall": 1.0,
+    "f1_score": 0.13888888888888887
+  },
+  {
+    "threshold": 0.02,
+    "anomalies_detected": 526,
+    "true_positives": 50,
+    "false_positives": 476,
+    "precision": 0.09505703422053231,
+    "recall": 1.0,
+    "f1_score": 0.1736111111111111
+  },
+  {
+    "threshold": 0.03,
+    "anomalies_detected": 473,
+    "true_positives": 50,
+    "false_positives": 423,
+    "precision": 0.10570824524312897,
+    "recall": 1.0,
+    "f1_score": 0.19120458891013384
+  },
+  {
+    "threshold": 0.04,
+    "anomalies_detected": 456,
+    "true_positives": 50,
+    "false_positives": 406,
+    "precision": 0.10964912280701754,
+    "recall": 1.0,
+    "f1_score": 0.1976284584980237
+  },
+  {
+    "threshold": 0.05,
+    "anomalies_detected": 449,
+    "true_positives": 50,
+    "false_positives": 399,
+    "precision": 0.111358574610245,
+    "recall": 1.0,
+    "f1_score": 0.20040080160320642
+  },
+  {
+    "threshold": 0.06,
+    "anomalies_detected": 436,
+    "true_positives": 50,
+    "false_positives": 386,
+    "precision": 0.11467889908256881,
+    "recall": 1.0,
+    "f1_score": 0.205761316872428
+  },
+  {
+    "threshold": 0.07,
+    "anomalies_detected": 394,
+    "true_positives": 50,
+    "false_positives": 344,
+    "precision": 0.12690355329949238,
+    "recall": 1.0,
+    "f1_score": 0.2252252252252252
+  },
+  {
+    "threshold": 0.08,
+    "anomalies_detected": 409,
+    "true_positives": 50,
+    "false_positives": 359,
+    "precision": 0.12224938875305623,
+    "recall": 1.0,
+    "f1_score": 0.21786492374727667
+  },
+  {
+    "threshold": 0.09,
+    "anomalies_detected": 328,
+    "true_positives": 50,
+    "false_positives": 278,
+    "precision": 0.1524390243902439,
+    "recall": 1.0,
+    "f1_score": 0.2645502645502646
+  },
+  {
+    "threshold": 0.1,
+    "anomalies_detected": 197,
+    "true_positives": 50,
+    "false_positives": 147,
+    "precision": 0.25380710659898476,
+    "recall": 1.0,
+    "f1_score": 0.40485829959514164
+  },
+  {
+    "threshold": 0.11,
+    "anomalies_detected": 146,
+    "true_positives": 50,
+    "false_positives": 96,
+    "precision": 0.3424657534246575,
+    "recall": 1.0,
+    "f1_score": 0.5102040816326531
+  },
+  {
+    "threshold": 0.12,
+    "anomalies_detected": 81,
+    "true_positives": 50,
+    "false_positives": 31,
+    "precision": 0.6172839506172839,
+    "recall": 1.0,
+    "f1_score": 0.7633587786259541
+  },
+  {
+    "threshold": 0.13,
+    "anomalies_detected": 44,
+    "true_positives": 44,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.88,
+    "f1_score": 0.9361702127659575
+  },
+  {
+    "threshold": 0.14,
+    "anomalies_detected": 41,
+    "true_positives": 41,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.82,
+    "f1_score": 0.9010989010989011
+  },
+  {
+    "threshold": 0.15,
+    "anomalies_detected": 38,
+    "true_positives": 38,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.76,
+    "f1_score": 0.8636363636363636
+  },
+  {
+    "threshold": 0.16,
+    "anomalies_detected": 35,
+    "true_positives": 35,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1_score": 0.8235294117647058
+  },
+  {
+    "threshold": 0.17,
+    "anomalies_detected": 21,
+    "true_positives": 21,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.42,
+    "f1_score": 0.5915492957746479
+  },
+  {
+    "threshold": 0.18,
+    "anomalies_detected": 37,
+    "true_positives": 37,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.74,
+    "f1_score": 0.8505747126436781
+  },
+  {
+    "threshold": 0.19,
+    "anomalies_detected": 37,
+    "true_positives": 37,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.74,
+    "f1_score": 0.8505747126436781
+  },
+  {
+    "threshold": 0.2,
+    "anomalies_detected": 6,
+    "true_positives": 6,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.12,
+    "f1_score": 0.21428571428571425
+  },
+  {
+    "threshold": 0.25,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  {
+    "threshold": 0.3,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  {
+    "threshold": 0.35,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  {
+    "threshold": 0.4,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  {
+    "threshold": 0.45,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  {
+    "threshold": 0.5,
+    "anomalies_detected": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  }
+]

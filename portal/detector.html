@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Detector de Anomalias - API Log Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav a:hover, .nav a.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .form-group { margin-bottom: 15px; }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background-color: #007bff !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3) !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin: 5px !important;
+            min-width: 120px !important;
+        }
+        button:hover {
+            background-color: #0056b3 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4) !important;
+        }
+        .btn-success {
+            background-color: #28a745 !important;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3) !important;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34 !important;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4) !important;
+        }
+        .btn-info {
+            background-color: #17a2b8 !important;
+            box-shadow: 0 2px 4px rgba(23, 162, 184, 0.3) !important;
+        }
+        .btn-info:hover {
+            background-color: #117a8b !important;
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.4) !important;
+        }
+        .btn-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+            box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3) !important;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800 !important;
+            box-shadow: 0 4px 8px rgba(255, 193, 7, 0.4) !important;
+        }
+        .btn-danger {
+            background-color: #dc3545 !important;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3) !important;
+        }
+        .btn-danger:hover {
+            background-color: #c82333 !important;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4) !important;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+        .status.info {
+            background: #bee3f8;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading.show {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Detector de Anomalias</h1>
+            <p>Sistema de detecção de anomalias em logs de API</p>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">🏠 Início</a></li>
+                <li><a href="detector.html" class="active">🔍 Detector</a></li>
+                <li><a href="feedback.html">🏷️ Feedback</a></li>
+                <li><a href="timeline.html">📊 Timeline</a></li>
+                <li><a href="docs.html">📚 Documentação</a></li>
+                <li><a href="config.html">⚙️ Configurações</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <!-- Seção de Envio de Logs -->
+            <div class="section">
+                <h2>📝 Enviar Novo Log</h2>
+                <form id="logForm">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="requestId">Request ID:</label>
+                            <input type="text" id="requestId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientId">Client ID:</label>
+                            <input type="text" id="clientId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ip">IP:</label>
+                            <input type="text" id="ip" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apiId">API ID:</label>
+                            <input type="text" id="apiId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="path">Path:</label>
+                            <input type="text" id="path" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="method">Método:</label>
+                            <select id="method" required>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="PATCH">PATCH</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <input type="number" id="status" min="100" max="599" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timestamp">Timestamp:</label>
+                            <input type="datetime-local" id="timestamp" required>
+                        </div>
+                    </div>
+                    <button type="submit">📤 Enviar Log</button>
+                </form>
+                <div id="logMessage"></div>
+            </div>
+
+            <!-- Seção de Machine Learning -->
+            <div class="section">
+                <h2>🤖 Machine Learning</h2>
+                <p>Detecção avançada de anomalias usando algoritmos de ML</p>
+                
+                <div class="form-group">
+                    <label for="mlApiId">API ID:</label>
+                    <input type="text" id="mlApiId" placeholder="Ex: api_realistic">
+                </div>
+                
+                <div class="form-group">
+                    <label for="mlHoursBack">Horas para trás:</label>
+                    <input type="number" id="mlHoursBack" value="24" min="1" max="168">
+                </div>
+                
+                <div class="form-group">
+                    <label for="mlModel">Modelo:</label>
+                    <select id="mlModel">
+                        <option value="iforest">Isolation Forest</option>
+                        <option value="lof">Local Outlier Factor</option>
+                        <option value="knn">K-Nearest Neighbors</option>
+                        <option value="ocsvm">One-Class SVM</option>
+                        <option value="cblof">Cluster-Based LOF</option>
+                    </select>
+                </div>
+                
+                <button onclick="trainMLModels()">🎯 Treinar Modelos</button>
+                <button onclick="detectMLAnomalies()">🔍 Detectar Anomalias</button>
+                <button onclick="compareMLModels()">📊 Comparar Modelos</button>
+                
+                <div id="mlLoading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Processando...</p>
+                </div>
+                
+                <div id="mlStatus"></div>
+                <div id="mlResults" class="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Utility functions
+        function showLoading(show = true, elementId = 'mlLoading') {
+            const loading = document.getElementById(elementId);
+            if (loading) {
+                if (show) {
+                    loading.classList.add('show');
+                } else {
+                    loading.classList.remove('show');
+                }
+            }
+        }
+
+        function showStatus(message, type = 'info', elementId = 'mlStatus') {
+            const status = document.getElementById(elementId);
+            if (status) {
+                status.innerHTML = `<div class="status ${type}">${message}</div>`;
+                setTimeout(() => {
+                    status.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        function showMessage(message, type = 'info', elementId = 'logMessage') {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `<div class="status ${type}">${message}</div>`;
+                setTimeout(() => {
+                    element.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        // Enviar log
+        document.addEventListener('DOMContentLoaded', function() {
+            const logForm = document.getElementById('logForm');
+            if (logForm) {
+                logForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        requestId: document.getElementById('requestId').value,
+                        clientId: document.getElementById('clientId').value,
+                        ip: document.getElementById('ip').value,
+                        apiId: document.getElementById('apiId').value,
+                        path: document.getElementById('path').value,
+                        method: document.getElementById('method').value,
+                        status: parseInt(document.getElementById('status').value),
+                        timestamp: document.getElementById('timestamp').value
+                    };
+
+                    try {
+                        const response = await fetch(`${API_BASE}/logs`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        if (response.ok) {
+                            showMessage('Log enviado com sucesso!', 'success');
+                            logForm.reset();
+                        } else {
+                            showMessage('Erro ao enviar log', 'error');
+                        }
+                    } catch (error) {
+                        showMessage('Erro de conexão: ' + error.message, 'error');
+                    }
+                });
+            }
+        });
+
+        // Treinar modelos de ML
+        async function trainMLModels() {
+            const apiId = document.getElementById('mlApiId').value;
+            const hoursBack = document.getElementById('mlHoursBack').value;
+            
+            showLoading(true);
+            showStatus('Treinando modelos de machine learning...', 'info');
+            
+            try {
+                const requestBody = {
+                    apiId: apiId || null,
+                    hours_back: parseInt(hoursBack)
+                };
+                
+                const response = await fetch(`${API_BASE}/ml/train`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus('✅ Modelos treinados com sucesso!', 'success');
+                    displayMLTrainingResults(data);
+                } else {
+                    showStatus('❌ Erro ao treinar modelos: ' + (data.error || 'Erro desconhecido'), 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Erro de conexão: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Detectar anomalias com ML
+        async function detectMLAnomalies() {
+            const apiId = document.getElementById('mlApiId').value;
+            const hoursBack = document.getElementById('mlHoursBack').value;
+            const model = document.getElementById('mlModel').value;
+            
+            showLoading(true);
+            showStatus('Detectando anomalias com machine learning...', 'info');
+            
+            try {
+                const params = new URLSearchParams({
+                    apiId: apiId || '',
+                    hours_back: hoursBack,
+                    model_name: model
+                });
+                
+                const response = await fetch(`${API_BASE}/ml/detect?${params}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus(`✅ ${data.anomalies_detected || 0} anomalias detectadas`, 'success');
+                    displayMLResults(data);
+                } else {
+                    showStatus('❌ Erro ao detectar anomalias: ' + (data.error || 'Erro desconhecido'), 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Erro de conexão: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Comparar modelos ML
+        async function compareMLModels() {
+            const apiId = document.getElementById('mlApiId').value;
+            const hoursBack = document.getElementById('mlHoursBack').value;
+            
+            showLoading(true);
+            showStatus('Comparando modelos de machine learning...', 'info');
+            
+            try {
+                const params = new URLSearchParams({
+                    apiId: apiId || '',
+                    hours_back: hoursBack
+                });
+                
+                const response = await fetch(`${API_BASE}/ml/compare?${params}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus('✅ Comparação concluída!', 'success');
+                    displayMLComparison(data);
+                } else {
+                    showStatus('❌ Erro ao comparar modelos: ' + (data.error || 'Erro desconhecido'), 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Erro de conexão: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Exibir resultados do treinamento
+        function displayMLTrainingResults(data) {
+            const results = document.getElementById('mlResults');
+            if (results) {
+                let html = '<h3>🎯 Resultados do Treinamento</h3>';
+                
+                if (data.models_trained) {
+                    html += '<div class="card"><h4>Modelos Treinados:</h4><ul>';
+                    for (const [model, status] of Object.entries(data.models_trained)) {
+                        html += `<li><strong>${model.toUpperCase()}:</strong> ${status}</li>`;
+                    }
+                    html += '</ul></div>';
+                }
+                
+                if (data.logs_used) {
+                    html += `<div class="card"><h4>Estatísticas:</h4><p>Logs utilizados: ${data.logs_used}</p></div>`;
+                }
+                
+                results.innerHTML = html;
+            }
+        }
+
+        // Exibir resultados da detecção
+        function displayMLResults(data) {
+            const results = document.getElementById('mlResults');
+            if (results) {
+                let html = '<h3>🔍 Resultados da Detecção</h3>';
+                
+                html += `<div class="card">
+                    <h4>Resumo:</h4>
+                    <p><strong>Modelo usado:</strong> ${data.model_used || 'N/A'}</p>
+                    <p><strong>Logs analisados:</strong> ${data.logs_analyzed || 0}</p>
+                    <p><strong>Anomalias detectadas:</strong> ${data.anomalies_detected || 0}</p>
+                    <p><strong>Taxa de anomalia:</strong> ${((data.anomaly_rate || 0) * 100).toFixed(2)}%</p>
+                </div>`;
+                
+                if (data.anomalies && data.anomalies.length > 0) {
+                    html += '<div class="card"><h4>Anomalias Detectadas:</h4>';
+                    data.anomalies.slice(0, 5).forEach((anomaly, index) => {
+                        html += `<div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                            <p><strong>Anomalia ${index + 1}:</strong></p>
+                            <p><strong>Request ID:</strong> ${anomaly.requestId}</p>
+                            <p><strong>API ID:</strong> ${anomaly.apiId || 'N/A'}</p>
+                            <p><strong>Client ID:</strong> ${anomaly.clientId || 'N/A'}</p>
+                            <p><strong>Método:</strong> ${anomaly.method || 'N/A'}</p>
+                            <p><strong>Score:</strong> ${anomaly.anomaly_score?.toFixed(3) || 'N/A'}</p>
+                            <p><strong>IP:</strong> ${anomaly.ip || 'N/A'}</p>
+                            <p><strong>Path:</strong> ${anomaly.path || 'N/A'}</p>
+                            <p><strong>Status:</strong> ${anomaly.status || 'N/A'}</p>
+                            <p><strong>Timestamp:</strong> ${anomaly.timestamp ? new Date(anomaly.timestamp).toLocaleString() : 'N/A'}</p>
+                            ${anomaly.anomaly_description ? `<p><strong>🔍 Motivo:</strong> <span style="color: #e74c3c; font-style: italic;">${anomaly.anomaly_description}</span></p>` : ''}
+                        </div>`;
+                    });
+                    if (data.anomalies.length > 5) {
+                        html += `<p><em>... e mais ${data.anomalies.length - 5} anomalias</em></p>`;
+                    }
+                    html += '</div>';
+                }
+                
+                results.innerHTML = html;
+            }
+        }
+
+        // Exibir comparação de modelos
+        function displayMLComparison(data) {
+            const results = document.getElementById('mlResults');
+            if (results) {
+                let html = '<h3>📊 Comparação de Modelos</h3>';
+                
+                if (data.models_comparison) {
+                    html += '<div class="card"><h4>Resultados por Modelo:</h4>';
+                    for (const [model, result] of Object.entries(data.models_comparison)) {
+                        if (result.error) {
+                            html += `<p><strong>${model.toUpperCase()}:</strong> ❌ ${result.error}</p>`;
+                        } else {
+                            html += `<p><strong>${model.toUpperCase()}:</strong> ${result.anomalies_detected || 0} anomalias (${((result.anomaly_rate || 0) * 100).toFixed(1)}%)</p>`;
+                        }
+                    }
+                    html += '</div>';
+                }
+                
+                if (data.logs_analyzed) {
+                    html += `<div class="card"><h4>Estatísticas:</h4><p>Logs analisados: ${data.logs_analyzed}</p></div>`;
+                }
+                
+                results.innerHTML = html;
+            }
+        }
+    </script>
+</body>
+</html> 

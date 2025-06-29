@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 API Log Analyzer - Página Inicial</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav a:hover, .nav a.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            border-color: #007bff;
+        }
+        .feature-icon { font-size: 3em; margin-bottom: 20px; }
+        .feature-card h3 { color: #333; font-size: 1.5em; margin-bottom: 15px; }
+        .feature-card p { color: #666; line-height: 1.6; }
+        .cta-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+        }
+        .cta-section h3 { color: #333; font-size: 2em; margin-bottom: 20px; }
+        .cta-section p { color: #666; font-size: 1.1em; margin-bottom: 30px; }
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 API Log Analyzer</h1>
+            <p>Ferramenta completa para análise de anomalias em logs de API</p>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html" class="active">🏠 Início</a></li>
+                <li><a href="detector.html">📊 Detector</a></li>
+                <li><a href="feedback.html">🏷️ Feedback</a></li>
+                <li><a href="docs.html">📚 Documentação</a></li>
+                <li><a href="config.html">⚙️ Configurações</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="section">
+                <h2>Bem-vindo ao API Log Analyzer</h2>
+                <p>Esta plataforma permite analisar, detectar e gerenciar anomalias em logs de APIs de forma visual, interativa e eficiente. Utilize o menu acima para navegar entre as funcionalidades.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Detecção de Anomalias</h3>
+                    <p>Detecte padrões suspeitos e anomalias em tempo real usando algoritmos de Machine Learning.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <h3>Feedback Inteligente</h3>
+                    <p>Marque falsos positivos e ajude o sistema a aprender com o feedback supervisionado.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Configurações Avançadas</h3>
+                    <p>Ajuste thresholds, preferências de modelo e parâmetros do sistema facilmente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Documentação Centralizada</h3>
+                    <p>Acesse guias, exemplos e explicações detalhadas sobre o funcionamento da plataforma.</p>
+                </div>
+            </div>
+            <div class="cta-section">
+                <h3>Comece agora!</h3>
+                <p>Utilize o menu para acessar o detector de anomalias, enviar feedbacks ou configurar o sistema conforme sua necessidade.</p>
+                <div class="cta-buttons">
+                    <a href="detector.html" class="nav-link active">Detector</a>
+                    <a href="feedback.html" class="nav-link">Feedback</a>
+                    <a href="config.html" class="nav-link">Configurações</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

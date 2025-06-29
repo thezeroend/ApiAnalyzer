@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Configurações - API Log Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav a:hover, .nav a.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        /* Estilos globais para todos os botões */
+        button {
+            background-color: #007bff !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3) !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin: 5px !important;
+            min-width: 120px !important;
+        }
+        button:hover {
+            background-color: #0056b3 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4) !important;
+        }
+        .btn-success {
+            background-color: #28a745 !important;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3) !important;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34 !important;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4) !important;
+        }
+        .btn-info {
+            background-color: #17a2b8 !important;
+            box-shadow: 0 2px 4px rgba(23, 162, 184, 0.3) !important;
+        }
+        .btn-info:hover {
+            background-color: #117a8b !important;
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.4) !important;
+        }
+        .btn-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+            box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3) !important;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800 !important;
+            box-shadow: 0 4px 8px rgba(255, 193, 7, 0.4) !important;
+        }
+        .btn-danger {
+            background-color: #dc3545 !important;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3) !important;
+        }
+        .btn-danger:hover {
+            background-color: #c82333 !important;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4) !important;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+        .status.info {
+            background: #bee3f8;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading.show {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .config-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .config-card:hover {
+            transform: translateY(-2px);
+        }
+        .config-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .config-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .config-value {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #495057;
+            margin-top: 10px;
+        }
+        .threshold-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .threshold-value {
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .current-config {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .current-config h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .config-item:last-child {
+            border-bottom: none;
+        }
+        .config-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .config-value-display {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #495057;
+        }
+        .help-text {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+        .help-text strong {
+            color: #856404;
+        }
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            .config-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Configurações</h1>
+            <p>Ajuste parâmetros e configurações do sistema de detecção de anomalias</p>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">🏠 Início</a></li>
+                <li><a href="detector.html">🔍 Detector</a></li>
+                <li><a href="feedback.html">🏷️ Feedback</a></li>
+                <li><a href="config.html" class="active">⚙️ Configurações</a></li>
+                <li><a href="timeline.html">📊 Timeline</a></li>
+                <li><a href="docs.html">📚 Documentação</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <!-- Configurações Atuais -->
+            <div class="current-config">
+                <h3>📋 Configurações Atuais</h3>
+                <div id="currentConfigContent">
+                    <div class="loading show">
+                        <div class="spinner"></div>
+                        <p>Carregando configurações...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ajuste de Threshold -->
+            <div class="section">
+                <h2>🎯 Ajuste de Threshold</h2>
+                <p>O threshold determina a sensibilidade do sistema para detectar anomalias. Valores mais baixos detectam mais anomalias (mais falsos positivos), valores mais altos são mais restritivos.</p>
+                
+                <div class="help-text">
+                    <strong>💡 Dica:</strong> Comece com 0.12 e ajuste baseado nos resultados. Se houver muitos falsos positivos, aumente o valor. Se estiver perdendo anomalias reais, diminua o valor.
+                </div>
+
+                <div class="form-group">
+                    <label for="thresholdSlider">Threshold de Anomalia:</label>
+                    <input type="range" id="thresholdSlider" min="0.01" max="0.5" step="0.01" value="0.12" class="threshold-slider">
+                    <div class="threshold-value" id="thresholdValue">0.12</div>
+                    <small>Valor atual: <span id="currentThreshold">Carregando...</span></small>
+                </div>
+
+                <button onclick="updateThreshold()" class="btn-success">💾 Salvar Threshold</button>
+                <button onclick="testThreshold()" class="btn-info">🧪 Testar Configuração</button>
+            </div>
+
+            <!-- Configurações Avançadas -->
+            <div class="section">
+                <h2>🔧 Configurações Avançadas</h2>
+                <p>Ajuste parâmetros avançados do sistema de Machine Learning e feedback.</p>
+
+                <div class="config-grid">
+                    <div class="config-card">
+                        <div class="config-title">🔄 Retreinamento</div>
+                        <div class="config-description">
+                            Configurações relacionadas ao retreinamento automático dos modelos com base no feedback.
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="retrainInterval">Intervalo de Retreinamento (horas):</label>
+                            <input type="number" id="retrainInterval" min="1" max="168" value="24">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minFeedback">Mínimo de Feedbacks para Retreinar:</label>
+                            <input type="number" id="minFeedback" min="1" max="1000" value="10">
+                        </div>
+                        
+                        <button onclick="updateRetrainConfig()" class="btn-success">💾 Salvar</button>
+                    </div>
+
+                    <div class="config-card">
+                        <div class="config-title">📊 Treinamento</div>
+                        <div class="config-description">
+                            Configurações relacionadas ao treinamento dos modelos de Machine Learning.
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="maxLogs">Máximo de Logs para Treinamento:</label>
+                            <input type="number" id="maxLogs" min="100" max="100000" value="10000">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="featureScaling">Escalar Features:</label>
+                            <select id="featureScaling">
+                                <option value="true">Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                        </div>
+                        
+                        <button onclick="updateTrainingConfig()" class="btn-success">💾 Salvar</button>
+                    </div>
+
+                    <div class="config-card">
+                        <div class="config-title">💾 Persistência</div>
+                        <div class="config-description">
+                            Configurações relacionadas ao armazenamento e persistência de dados.
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="modelPersistence">Persistir Modelos:</label>
+                            <select id="modelPersistence">
+                                <option value="true">Sim</option>
+                                <option value="false">Não</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="backupInterval">Intervalo de Backup (horas):</label>
+                            <input type="number" id="backupInterval" min="1" max="168" value="24">
+                        </div>
+                        
+                        <button onclick="updatePersistenceConfig()" class="btn-success">💾 Salvar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teste de Configuração -->
+            <div class="section">
+                <h2>🧪 Teste de Configuração</h2>
+                <p>Teste as configurações atuais com dados de exemplo para verificar a performance.</p>
+
+                <div class="form-group">
+                    <label for="testApiId">API ID para Teste:</label>
+                    <input type="text" id="testApiId" placeholder="Digite o ID da API para testar">
+                </div>
+
+                <button onclick="runConfigurationTest()" class="btn-info">🧪 Executar Teste</button>
+                <button onclick="resetToDefaults()" class="btn-warning">🔄 Restaurar Padrões</button>
+
+                <div id="testResults"></div>
+            </div>
+
+            <!-- Status e Logs -->
+            <div class="section">
+                <h2>📊 Status do Sistema</h2>
+                <p>Monitore o status atual do sistema e visualize logs de operações.</p>
+
+                <button onclick="getSystemStatus()" class="btn-info">📊 Verificar Status</button>
+                <button onclick="getSystemLogs()" class="btn-info">📋 Ver Logs</button>
+
+                <div id="systemStatus"></div>
+            </div>
+
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Utility functions
+        function showLoading(show = true, elementId = 'loading') {
+            const loading = document.getElementById(elementId);
+            if (show) {
+                loading.classList.add('show');
+            } else {
+                loading.classList.remove('show');
+            }
+        }
+
+        function showStatus(message, type = 'info', elementId = 'status') {
+            const status = document.getElementById(elementId);
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+            setTimeout(() => {
+                status.innerHTML = '';
+            }, 5000);
+        }
+
+        // Load current configuration
+        async function loadCurrentConfig() {
+            try {
+                const response = await fetch(`${API_BASE}/config/`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    showStatus(`❌ Erro: ${data.error}`, 'error');
+                    return;
+                }
+                
+                displayCurrentConfig(data.config);
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao carregar configurações: ${error.message}`, 'error');
+            }
+        }
+
+        function displayCurrentConfig(config) {
+            const container = document.getElementById('currentConfigContent');
+            
+            // Acessar configurações das seções corretas
+            const mlConfig = config.ml_detection || {};
+            const feedbackConfig = config.feedback || {};
+            const monitoringConfig = config.monitoring || {};
+            const uiConfig = config.ui || {};
+            
+            const configHtml = `
+                <div class="config-item">
+                    <span class="config-label">Threshold de Anomalia:</span>
+                    <span class="config-value-display">${mlConfig.threshold || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Contaminação:</span>
+                    <span class="config-value-display">${mlConfig.contamination || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Modelo Preferido:</span>
+                    <span class="config-value-display">${mlConfig.model_preference || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Retreinamento Automático:</span>
+                    <span class="config-value-display">${feedbackConfig.auto_retrain ? 'Sim' : 'Não'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Intervalo de Retreinamento:</span>
+                    <span class="config-value-display">${feedbackConfig.retrain_interval_hours || 'N/A'} horas</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Peso Falsos Positivos:</span>
+                    <span class="config-value-display">${feedbackConfig.false_positive_weight || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Threshold de Alerta:</span>
+                    <span class="config-value-display">${monitoringConfig.alert_threshold || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Notificações:</span>
+                    <span class="config-value-display">${monitoringConfig.notification_enabled ? 'Ativadas' : 'Desativadas'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Retenção de Logs:</span>
+                    <span class="config-value-display">${monitoringConfig.log_retention_days || 'N/A'} dias</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Tema da Interface:</span>
+                    <span class="config-value-display">${uiConfig.theme || 'N/A'}</span>
+                </div>
+                <div class="config-item">
+                    <span class="config-label">Idioma:</span>
+                    <span class="config-value-display">${uiConfig.language || 'N/A'}</span>
+                </div>
+            `;
+            
+            container.innerHTML = configHtml;
+            
+            // Update form values with actual config values
+            if (mlConfig.threshold) {
+                document.getElementById('thresholdSlider').value = mlConfig.threshold;
+                document.getElementById('thresholdValue').textContent = mlConfig.threshold;
+                document.getElementById('currentThreshold').textContent = mlConfig.threshold;
+            }
+            
+            if (feedbackConfig.retrain_interval_hours) {
+                document.getElementById('retrainInterval').value = feedbackConfig.retrain_interval_hours;
+            }
+            
+            // Set default values for fields that might not exist in config
+            if (!document.getElementById('minFeedback').value) {
+                document.getElementById('minFeedback').value = '10';
+            }
+            if (!document.getElementById('maxLogs').value) {
+                document.getElementById('maxLogs').value = '10000';
+            }
+            if (!document.getElementById('featureScaling').value) {
+                document.getElementById('featureScaling').value = 'true';
+            }
+            if (!document.getElementById('modelPersistence').value) {
+                document.getElementById('modelPersistence').value = 'true';
+            }
+        }
+
+        // Update threshold
+        async function updateThreshold() {
+            try {
+                const threshold = parseFloat(document.getElementById('thresholdSlider').value);
+                
+                const response = await fetch(`${API_BASE}/config/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        section: 'ml_detection',
+                        key: 'threshold',
+                        value: threshold 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('✅ Threshold atualizado com sucesso!', 'success');
+                    loadCurrentConfig(); // Reload config
+                } else {
+                    showStatus(`❌ Erro: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao atualizar threshold: ${error.message}`, 'error');
+            }
+        }
+
+        // Update retrain configuration
+        async function updateRetrainConfig() {
+            try {
+                const retrainInterval = parseInt(document.getElementById('retrainInterval').value);
+                const minFeedback = parseInt(document.getElementById('minFeedback').value);
+                
+                // Atualizar intervalo de retreinamento
+                const response1 = await fetch(`${API_BASE}/config/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'feedback',
+                        key: 'retrain_interval_hours',
+                        value: retrainInterval
+                    })
+                });
+                
+                const data1 = await response1.json();
+                
+                if (data1.success) {
+                    showStatus('✅ Configurações de retreinamento atualizadas!', 'success');
+                    loadCurrentConfig();
+                } else {
+                    showStatus(`❌ Erro: ${data1.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao atualizar configurações: ${error.message}`, 'error');
+            }
+        }
+
+        // Update training configuration
+        async function updateTrainingConfig() {
+            try {
+                const maxLogs = parseInt(document.getElementById('maxLogs').value);
+                const featureScaling = document.getElementById('featureScaling').value === 'true';
+                
+                // Atualizar configurações de treinamento (adicionar se não existir)
+                const response = await fetch(`${API_BASE}/config/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'ml_detection',
+                        key: 'max_logs_for_training',
+                        value: maxLogs
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('✅ Configurações de treinamento atualizadas!', 'success');
+                    loadCurrentConfig();
+                } else {
+                    showStatus(`❌ Erro: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao atualizar configurações: ${error.message}`, 'error');
+            }
+        }
+
+        // Update persistence configuration
+        async function updatePersistenceConfig() {
+            try {
+                const modelPersistence = document.getElementById('modelPersistence').value === 'true';
+                const backupInterval = parseInt(document.getElementById('backupInterval').value);
+                
+                // Atualizar configurações de persistência (adicionar se não existir)
+                const response = await fetch(`${API_BASE}/config/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        section: 'monitoring',
+                        key: 'model_persistence',
+                        value: modelPersistence
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('✅ Configurações de persistência atualizadas!', 'success');
+                    loadCurrentConfig();
+                } else {
+                    showStatus(`❌ Erro: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao atualizar configurações: ${error.message}`, 'error');
+            }
+        }
+
+        // Test threshold
+        async function testThreshold() {
+            try {
+                const threshold = parseFloat(document.getElementById('thresholdSlider').value);
+                const apiId = document.getElementById('testApiId').value || 'default';
+                
+                showStatus('🧪 Testando configuração...', 'info');
+                
+                const response = await fetch(`${API_BASE}/ml/detect?apiId=${apiId}&threshold=${threshold}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    showStatus(`❌ Erro no teste: ${data.error}`, 'error');
+                    return;
+                }
+                
+                const anomalies = data.anomalies || [];
+                const totalLogs = data.total_logs || 0;
+                const anomalyRate = totalLogs > 0 ? (anomalies.length / totalLogs * 100).toFixed(2) : 0;
+                
+                showStatus(`✅ Teste concluído! ${anomalies.length} anomalias detectadas em ${totalLogs} logs (${anomalyRate}%)`, 'success');
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro no teste: ${error.message}`, 'error');
+            }
+        }
+
+        // Run configuration test
+        async function runConfigurationTest() {
+            try {
+                const apiId = document.getElementById('testApiId').value || 'default';
+                
+                showStatus('🧪 Executando teste de configuração...', 'info');
+                
+                // Test with current threshold
+                const threshold = parseFloat(document.getElementById('thresholdSlider').value);
+                const response = await fetch(`${API_BASE}/ml/detect?apiId=${apiId}&threshold=${threshold}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    showStatus(`❌ Erro no teste: ${data.error}`, 'error');
+                    return;
+                }
+                
+                const resultsHtml = `
+                    <div class="config-card">
+                        <div class="config-title">🧪 Resultados do Teste</div>
+                        <div class="config-description">
+                            <strong>API ID:</strong> ${apiId}<br>
+                            <strong>Threshold:</strong> ${threshold}<br>
+                            <strong>Total de Logs:</strong> ${data.total_logs || 0}<br>
+                            <strong>Anomalias Detectadas:</strong> ${data.anomalies ? data.anomalies.length : 0}<br>
+                            <strong>Taxa de Anomalia:</strong> ${data.anomaly_rate ? (data.anomaly_rate * 100).toFixed(2) + '%' : 'N/A'}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('testResults').innerHTML = resultsHtml;
+                showStatus('✅ Teste de configuração concluído!', 'success');
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro no teste: ${error.message}`, 'error');
+            }
+        }
+
+        // Reset to defaults
+        async function resetToDefaults() {
+            if (!confirm('Tem certeza que deseja restaurar as configurações padrão?')) {
+                return;
+            }
+            
+            try {
+                const defaultConfig = {
+                    anomaly_threshold: 0.12,
+                    retrain_interval_hours: 24,
+                    min_feedback_for_retrain: 10,
+                    max_logs_for_training: 10000,
+                    feature_scaling: true,
+                    model_persistence: true
+                };
+                
+                const response = await fetch(`${API_BASE}/config/`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(defaultConfig)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('✅ Configurações restauradas para os padrões!', 'success');
+                    loadCurrentConfig();
+                } else {
+                    showStatus(`❌ Erro: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao restaurar configurações: ${error.message}`, 'error');
+            }
+        }
+
+        // Get system status
+        async function getSystemStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                const statusHtml = `
+                    <div class="config-card">
+                        <div class="config-title">📊 Status do Sistema</div>
+                        <div class="config-description">
+                            <strong>Status:</strong> ${data.status || 'OK'}<br>
+                            <strong>Timestamp:</strong> ${new Date().toLocaleString()}<br>
+                            <strong>Versão:</strong> ${data.version || '1.0.0'}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('systemStatus').innerHTML = statusHtml;
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao obter status: ${error.message}`, 'error');
+            }
+        }
+
+        // Get system logs
+        async function getSystemLogs() {
+            try {
+                showStatus('📋 Obtendo logs do sistema...', 'info');
+                
+                // This would be implemented in the backend
+                const logsHtml = `
+                    <div class="config-card">
+                        <div class="config-title">📋 Logs do Sistema</div>
+                        <div class="config-description">
+                            Funcionalidade de logs será implementada no backend.
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('systemStatus').innerHTML = logsHtml;
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showStatus(`❌ Erro ao obter logs: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load current configuration
+            loadCurrentConfig();
+            
+            // Setup threshold slider
+            const slider = document.getElementById('thresholdSlider');
+            const valueDisplay = document.getElementById('thresholdValue');
+            
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = this.value;
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+pymongo
+requests
+pyod
+scikit-learn
+numpy
+pandas
+torch

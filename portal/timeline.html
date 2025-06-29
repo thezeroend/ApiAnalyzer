@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Timeline de Anomalias - API Log Analyzer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav a:hover, .nav a.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 { color: #333; margin-bottom: 20px; font-size: 1.5em; }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background-color: #007bff !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3) !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin: 5px !important;
+            min-width: 120px !important;
+        }
+        button:hover {
+            background-color: #0056b3 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4) !important;
+        }
+        .btn-success {
+            background-color: #28a745 !important;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3) !important;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34 !important;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4) !important;
+        }
+        .btn-info {
+            background-color: #17a2b8 !important;
+            box-shadow: 0 2px 4px rgba(23, 162, 184, 0.3) !important;
+        }
+        .btn-info:hover {
+            background-color: #117a8b !important;
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.4) !important;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+        .status.info {
+            background: #bee3f8;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading.show {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .chart-container {
+            position: relative;
+            height: 500px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .summary-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .summary-card .label {
+            color: #666;
+            margin-top: 5px;
+        }
+        .anomalies-list {
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .anomaly-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+        .anomaly-item:hover {
+            background: #f0f0f0;
+        }
+        .anomaly-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .anomaly-score {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Timeline de Anomalias</h1>
+            <p>Visualize padrões temporais de anomalias detectadas pelo machine learning</p>
+        </div>
+        
+        <div class="nav">
+            <ul>
+                <li><a href="detector.html">🔍 Detector</a></li>
+                <li><a href="feedback.html">🏷️ Feedback</a></li>
+                <li><a href="config.html">⚙️ Configurações</a></li>
+                <li><a href="timeline.html" class="active">📊 Timeline</a></li>
+                <li><a href="docs.html">📚 Documentação</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <!-- Controles -->
+            <div class="section">
+                <h2>🎛️ Configurações do Gráfico</h2>
+                <div class="controls">
+                    <div class="form-group">
+                        <label for="apiId">API ID:</label>
+                        <input type="text" id="apiId" placeholder="Deixe vazio para todas as APIs">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelName">Modelo ML:</label>
+                        <select id="modelName">
+                            <option value="iforest">Isolation Forest</option>
+                            <option value="lof">Local Outlier Factor</option>
+                            <option value="knn">K-Nearest Neighbors</option>
+                            <option value="ocsvm">One-Class SVM</option>
+                            <option value="cblof">Cluster-Based LOF</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hoursBack">Horas para trás:</label>
+                        <input type="number" id="hoursBack" value="24" min="1" max="168">
+                    </div>
+                    <div class="form-group">
+                        <label for="intervalMinutes">Intervalo (minutos):</label>
+                        <select id="intervalMinutes">
+                            <option value="15">15 minutos</option>
+                            <option value="30" selected>30 minutos</option>
+                            <option value="60">1 hora</option>
+                            <option value="120">2 horas</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="loadTimeline()" class="btn-success">📊 Carregar Timeline</button>
+                <button onclick="exportData()" class="btn-info">💾 Exportar Dados</button>
+            </div>
+            
+            <!-- Status -->
+            <div id="status" class="status" style="display: none;"></div>
+            
+            <!-- Loading -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Carregando dados temporais...</p>
+            </div>
+            
+            <!-- Resumo -->
+            <div id="summary" class="section" style="display: none;">
+                <h2>📈 Resumo Estatístico</h2>
+                <div id="summaryCards" class="summary-cards"></div>
+            </div>
+            
+            <!-- Gráfico -->
+            <div id="chartSection" class="section" style="display: none;">
+                <h2>📊 Gráfico Temporal de Anomalias</h2>
+                <div class="chart-container">
+                    <canvas id="anomaliesChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Lista de Anomalias -->
+            <div id="anomaliesSection" class="section" style="display: none;">
+                <h2>🔍 Detalhes das Anomalias</h2>
+                <div id="anomaliesList" class="anomalies-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://localhost:8000";
+        let currentChart = null;
+        let timelineData = null;
+
+        // Carregar timeline
+        async function loadTimeline() {
+            const apiId = document.getElementById('apiId').value;
+            const modelName = document.getElementById('modelName').value;
+            const hoursBack = document.getElementById('hoursBack').value;
+            const intervalMinutes = document.getElementById('intervalMinutes').value;
+            
+            showLoading(true);
+            showStatus('Carregando dados temporais de anomalias...', 'info');
+            
+            try {
+                const params = new URLSearchParams({
+                    apiId: apiId || '',
+                    model_name: modelName,
+                    hours_back: hoursBack,
+                    interval_minutes: intervalMinutes
+                });
+                
+                const response = await fetch(`${API_BASE}/ml/anomalies-timeline?${params}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    timelineData = data;
+                    showStatus(`✅ Timeline carregado com ${data.total_anomalies} anomalias`, 'success');
+                    displaySummary(data.summary);
+                    displayChart(data.chart_data);
+                    displayAnomalies(data.timeline_data);
+                } else {
+                    showStatus('❌ Erro ao carregar timeline: ' + (data.error || 'Erro desconhecido'), 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Erro de conexão: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Exibir resumo
+        function displaySummary(summary) {
+            const container = document.getElementById('summaryCards');
+            const summaryHtml = `
+                <div class="summary-card">
+                    <div class="number">${summary.total_intervals}</div>
+                    <div class="label">Intervalos de Tempo</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number">${summary.max_anomalies_per_interval}</div>
+                    <div class="label">Máx. Anomalias/Intervalo</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number">${summary.avg_anomalies_per_interval.toFixed(1)}</div>
+                    <div class="label">Média Anomalias/Intervalo</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number">${summary.max_score.toFixed(3)}</div>
+                    <div class="label">Score Máximo</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number">${summary.avg_score.toFixed(3)}</div>
+                    <div class="label">Score Médio</div>
+                </div>
+            `;
+            container.innerHTML = summaryHtml;
+            document.getElementById('summary').style.display = 'block';
+        }
+
+        // Exibir gráfico
+        function displayChart(chartData) {
+            const ctx = document.getElementById('anomaliesChart').getContext('2d');
+            
+            // Destruir gráfico anterior se existir
+            if (currentChart) {
+                currentChart.destroy();
+            }
+            
+            // Formatar labels de tempo
+            const formattedLabels = chartData.labels.map(label => {
+                const date = new Date(label);
+                return date.toLocaleString('pt-BR', {
+                    month: 'short',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            });
+            
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: formattedLabels,
+                    datasets: [
+                        {
+                            label: chartData.datasets[0].label,
+                            data: chartData.datasets[0].data,
+                            borderColor: chartData.datasets[0].borderColor,
+                            backgroundColor: chartData.datasets[0].backgroundColor,
+                            yAxisID: 'y',
+                            tension: 0.4
+                        },
+                        {
+                            label: chartData.datasets[1].label,
+                            data: chartData.datasets[1].data,
+                            borderColor: chartData.datasets[1].borderColor,
+                            backgroundColor: chartData.datasets[1].backgroundColor,
+                            yAxisID: 'y1',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Número de Anomalias'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Score de Anomalia'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Timeline de Anomalias'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    return 'Intervalo: ' + context[0].label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            document.getElementById('chartSection').style.display = 'block';
+        }
+
+        // Exibir lista de anomalias
+        function displayAnomalies(timelineData) {
+            const container = document.getElementById('anomaliesList');
+            
+            if (!timelineData || timelineData.length === 0) {
+                container.innerHTML = '<p>Nenhuma anomalia encontrada no período selecionado.</p>';
+                document.getElementById('anomaliesSection').style.display = 'block';
+                return;
+            }
+            
+            let anomaliesHtml = '';
+            
+            timelineData.forEach(interval => {
+                const date = new Date(interval.timestamp);
+                const formattedTime = date.toLocaleString('pt-BR');
+                
+                anomaliesHtml += `
+                    <div class="anomaly-item">
+                        <div class="anomaly-header">
+                            <h4>${formattedTime} (${interval.anomaly_count} anomalias)</h4>
+                            <span class="anomaly-score">Score: ${interval.avg_score.toFixed(3)}</span>
+                        </div>
+                        <div class="anomalies-details">
+                            ${interval.anomalies.map(anomaly => `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                    <strong>${anomaly.requestId}</strong> - ${anomaly.method} ${anomaly.path}<br>
+                                    <small>Cliente: ${anomaly.clientId} | IP: ${anomaly.ip} | Status: ${anomaly.status}</small><br>
+                                    ${anomaly.description ? `<small style="color: #e74c3c;">${anomaly.description}</small>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = anomaliesHtml;
+            document.getElementById('anomaliesSection').style.display = 'block';
+        }
+
+        // Exportar dados
+        function exportData() {
+            if (!timelineData) {
+                showStatus('❌ Nenhum dado para exportar. Carregue a timeline primeiro.', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(timelineData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `anomalies_timeline_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showStatus('✅ Dados exportados com sucesso!', 'success');
+        }
+
+        // Funções auxiliares
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('show');
+            } else {
+                loading.classList.remove('show');
+            }
+        }
+
+        // Carregar timeline automaticamente ao abrir a página
+        window.onload = function() {
+            loadTimeline();
+        };
+    </script>
+</body>
+</html> 

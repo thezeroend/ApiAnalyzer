@@ -1,0 +1,1441 @@
+{
+  "export_timestamp": "2025-06-28T23:40:48.879913",
+  "config": {
+    "apiId": "api_timeline_test",
+    "model_name": "iforest",
+    "hours_back": 24,
+    "interval_minutes": 30
+  },
+  "timeline_data": {
+    "status": "success",
+    "model_used": "iforest",
+    "total_anomalies": 102,
+    "time_interval_minutes": 30,
+    "hours_back": 24,
+    "timeline_data": [
+      {
+        "timestamp": "2025-06-27T23:30:00",
+        "anomaly_count": 13,
+        "avg_score": 0.09632366992423315,
+        "total_score": 1.252207709015031,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0001",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "POST",
+            "path": "/api/users/1",
+            "status": 204,
+            "score": 0.14401881676747064,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.144, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0002",
+            "clientId": "client_2",
+            "ip": "10.0.1.2",
+            "method": "POST",
+            "path": "/api/users/2",
+            "status": 204,
+            "score": 0.09969576058657381,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.100, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0003",
+            "clientId": "client_3",
+            "ip": "10.0.1.3",
+            "method": "GET",
+            "path": "/api/users/3",
+            "status": 200,
+            "score": 0.10264329322650223,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.103, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0004",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "PUT",
+            "path": "/api/users/4",
+            "status": 200,
+            "score": 0.09903378484704328,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.099, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0005",
+            "clientId": "client_5",
+            "ip": "10.0.1.5",
+            "method": "POST",
+            "path": "/api/users/5",
+            "status": 201,
+            "score": 0.08229347275651389,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.082, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0006",
+            "clientId": "client_6",
+            "ip": "10.0.1.6",
+            "method": "GET",
+            "path": "/api/users/6",
+            "status": 200,
+            "score": 0.10294744744413109,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.103, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0007",
+            "clientId": "client_7",
+            "ip": "10.0.1.7",
+            "method": "GET",
+            "path": "/api/users/7",
+            "status": 200,
+            "score": 0.1067759734668483,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.107, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0008",
+            "clientId": "client_8",
+            "ip": "10.0.1.8",
+            "method": "PUT",
+            "path": "/api/users/8",
+            "status": 201,
+            "score": 0.0943943819225761,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.094, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0009",
+            "clientId": "client_9",
+            "ip": "10.0.1.9",
+            "method": "POST",
+            "path": "/api/users/9",
+            "status": 200,
+            "score": 0.09136368937206762,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.091, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0010",
+            "clientId": "client_0",
+            "ip": "10.0.1.10",
+            "method": "PUT",
+            "path": "/api/users/10",
+            "status": 201,
+            "score": 0.06203954616565954,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.062, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0011",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 200,
+            "score": 0.11706182665428944,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.117, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0012",
+            "clientId": "client_2",
+            "ip": "10.0.1.12",
+            "method": "POST",
+            "path": "/api/users/12",
+            "status": 201,
+            "score": 0.06361799186938055,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.064, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_normal_0013",
+            "clientId": "client_3",
+            "ip": "10.0.1.13",
+            "method": "GET",
+            "path": "/api/users/13",
+            "status": 200,
+            "score": 0.08632172393597448,
+            "description": "Anomalia detectada: Horário atípico (23h) (Score: 0.086, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T00:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.01111163911970714,
+        "total_score": 0.02222327823941428,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0021",
+            "clientId": "client_1",
+            "ip": "10.0.1.21",
+            "method": "POST",
+            "path": "/api/users/21",
+            "status": 201,
+            "score": 0.005499608315520876,
+            "description": "Anomalia detectada: Horário atípico (0h) e Acesso em fim de semana (Score: 0.005, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.21) e Consumo através de 2 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0031",
+            "clientId": "client_1",
+            "ip": "10.0.1.31",
+            "method": "POST",
+            "path": "/api/users/31",
+            "status": 204,
+            "score": 0.016723669923893403,
+            "description": "Anomalia detectada: Horário atípico (0h) e Acesso em fim de semana (Score: 0.017, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.31) e Consumo através de 3 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T00:30:00",
+        "anomaly_count": 2,
+        "avg_score": 0.011469701333783833,
+        "total_score": 0.022939402667567665,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0041",
+            "clientId": "client_1",
+            "ip": "10.0.1.41",
+            "method": "PUT",
+            "path": "/api/users/41",
+            "status": 200,
+            "score": 0.008364696024704465,
+            "description": "Anomalia detectada: Horário atípico (0h) e Acesso em fim de semana (Score: 0.008, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.41) e Múltiplos endereços de IP usados (4 IPs diferentes) e Consumo através de 4 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0051",
+            "clientId": "client_1",
+            "ip": "10.0.1.51",
+            "method": "PUT",
+            "path": "/api/users/51",
+            "status": 200,
+            "score": 0.0145747066428632,
+            "description": "Anomalia detectada: Horário atípico (0h) e Acesso em fim de semana (Score: 0.015, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.51) e Múltiplos endereços de IP usados (5 IPs diferentes) e Consumo através de 5 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T01:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.015418169828433914,
+        "total_score": 0.03083633965686783,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0061",
+            "clientId": "client_1",
+            "ip": "10.0.1.61",
+            "method": "GET",
+            "path": "/api/users/61",
+            "status": 204,
+            "score": 0.02553779549803492,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana (Score: 0.026, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.61) e Múltiplos endereços de IP usados (6 IPs diferentes) e Consumo através de 6 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0071",
+            "clientId": "client_1",
+            "ip": "10.0.1.71",
+            "method": "POST",
+            "path": "/api/users/71",
+            "status": 204,
+            "score": 0.005298544158832907,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana (Score: 0.005, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.71) e Múltiplos endereços de IP usados (7 IPs diferentes) e Consumo através de 7 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T01:30:00",
+        "anomaly_count": 4,
+        "avg_score": 0.12862126105318705,
+        "total_score": 0.5144850442127482,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0081",
+            "clientId": "client_1",
+            "ip": "10.0.1.81",
+            "method": "GET",
+            "path": "/api/users/81",
+            "status": 204,
+            "score": 0.032888562969432655,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana (Score: 0.033, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.81) e Múltiplos endereços de IP usados (8 IPs diferentes) e Consumo através de 8 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0091",
+            "clientId": "client_1",
+            "ip": "10.0.1.91",
+            "method": "POST",
+            "path": "/api/users/91",
+            "status": 201,
+            "score": 0.0017041233609813577,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana (Score: 0.002, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.91) e Múltiplos endereços de IP usados (9 IPs diferentes) e Consumo através de 9 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0011",
+            "clientId": "client_anomaly_11",
+            "ip": "192.168.1.111",
+            "method": "POST",
+            "path": "/api/secure/11",
+            "status": 401,
+            "score": 0.23780468975596236,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.238, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0012",
+            "clientId": "client_anomaly_12",
+            "ip": "192.168.1.112",
+            "method": "POST",
+            "path": "/api/secure/12",
+            "status": 401,
+            "score": 0.24208766812637184,
+            "description": "Anomalia detectada: Horário atípico (1h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.242, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T02:00:00",
+        "anomaly_count": 9,
+        "avg_score": 0.02541513219130467,
+        "total_score": 0.22873618972174203,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0098",
+            "clientId": "client_8",
+            "ip": "10.0.1.98",
+            "method": "GET",
+            "path": "/api/users/98",
+            "status": 204,
+            "score": 0.011897142058004073,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.012, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.98) e Múltiplos endereços de IP usados (9 IPs diferentes) e Consumo através de 9 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0100",
+            "clientId": "client_0",
+            "ip": "10.0.1.0",
+            "method": "POST",
+            "path": "/api/users/0",
+            "status": 204,
+            "score": 0.020672303567476513,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.021, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Novo endereço de IP detectado (10.0.1.0) e Múltiplos endereços de IP usados (9 IPs diferentes) e Consumo através de 9 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0101",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "POST",
+            "path": "/api/users/1",
+            "status": 204,
+            "score": 0.07820541213790244,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.078, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0102",
+            "clientId": "client_2",
+            "ip": "10.0.1.2",
+            "method": "PUT",
+            "path": "/api/users/2",
+            "status": 204,
+            "score": 0.020517133330749893,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.021, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0103",
+            "clientId": "client_3",
+            "ip": "10.0.1.3",
+            "method": "GET",
+            "path": "/api/users/3",
+            "status": 204,
+            "score": 0.035037692103451534,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.035, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0104",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "PUT",
+            "path": "/api/users/4",
+            "status": 200,
+            "score": 0.011271740257107421,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.011, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0105",
+            "clientId": "client_5",
+            "ip": "10.0.1.5",
+            "method": "GET",
+            "path": "/api/users/5",
+            "status": 201,
+            "score": 0.010347280444327422,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.010, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0106",
+            "clientId": "client_6",
+            "ip": "10.0.1.6",
+            "method": "GET",
+            "path": "/api/users/6",
+            "status": 204,
+            "score": 0.02374118428433747,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.024, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0111",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 200,
+            "score": 0.017046301538385267,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.017, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T02:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.015558777547656999,
+        "total_score": 0.015558777547656999,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0131",
+            "clientId": "client_1",
+            "ip": "10.0.1.31",
+            "method": "GET",
+            "path": "/api/users/31",
+            "status": 204,
+            "score": 0.015558777547656999,
+            "description": "Anomalia detectada: Horário atípico (2h) e Acesso em fim de semana (Score: 0.016, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T03:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.22503306534536782,
+        "total_score": 0.22503306534536782,
+        "anomalies": [
+          {
+            "requestId": "req_anomaly_sparse_0003",
+            "clientId": "client_anomaly_3",
+            "ip": "192.168.1.103",
+            "method": "POST",
+            "path": "/api/secure/3",
+            "status": 401,
+            "score": 0.22503306534536782,
+            "description": "Anomalia detectada: Horário atípico (3h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.225, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T04:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.11343923480381135,
+        "total_score": 0.2268784696076227,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0181",
+            "clientId": "client_1",
+            "ip": "10.0.1.81",
+            "method": "PUT",
+            "path": "/api/users/81",
+            "status": 201,
+            "score": 0.008644147575383565,
+            "description": "Anomalia detectada: Horário atípico (4h) e Acesso em fim de semana (Score: 0.009, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0002",
+            "clientId": "client_anomaly_2",
+            "ip": "192.168.1.102",
+            "method": "POST",
+            "path": "/api/secure/2",
+            "status": 401,
+            "score": 0.21823432203223914,
+            "description": "Anomalia detectada: Horário atípico (4h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.218, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T04:30:00",
+        "anomaly_count": 3,
+        "avg_score": 0.09868775927727054,
+        "total_score": 0.29606327783181163,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0201",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "PUT",
+            "path": "/api/users/1",
+            "status": 200,
+            "score": 0.0497453486923668,
+            "description": "Anomalia detectada: Horário atípico (4h) e Acesso em fim de semana (Score: 0.050, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0211",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 204,
+            "score": 0.017537958794417996,
+            "description": "Anomalia detectada: Horário atípico (4h) e Acesso em fim de semana (Score: 0.018, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0010",
+            "clientId": "client_anomaly_10",
+            "ip": "192.168.1.110",
+            "method": "POST",
+            "path": "/api/secure/10",
+            "status": 401,
+            "score": 0.22877997034502684,
+            "description": "Anomalia detectada: Horário atípico (4h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.229, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T05:00:00",
+        "anomaly_count": 1,
+        "avg_score": 0.22719812017703334,
+        "total_score": 0.22719812017703334,
+        "anomalies": [
+          {
+            "requestId": "req_anomaly_sparse_0013",
+            "clientId": "client_anomaly_13",
+            "ip": "192.168.1.113",
+            "method": "POST",
+            "path": "/api/secure/13",
+            "status": 401,
+            "score": 0.22719812017703334,
+            "description": "Anomalia detectada: Horário atípico (5h) e Acesso em fim de semana e Erro do cliente (401) (Score: 0.227, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T06:00:00",
+        "anomaly_count": 3,
+        "avg_score": 0.1513373740165824,
+        "total_score": 0.45401212204974717,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0271",
+            "clientId": "client_1",
+            "ip": "10.0.1.71",
+            "method": "GET",
+            "path": "/api/users/71",
+            "status": 204,
+            "score": 0.012197384052417881,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.012, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0008",
+            "clientId": "client_anomaly_8",
+            "ip": "192.168.1.108",
+            "method": "POST",
+            "path": "/api/secure/8",
+            "status": 401,
+            "score": 0.2135624078345607,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.214, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0016",
+            "clientId": "client_anomaly_16",
+            "ip": "192.168.1.116",
+            "method": "POST",
+            "path": "/api/secure/16",
+            "status": 401,
+            "score": 0.22825233016276858,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.228, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T06:30:00",
+        "anomaly_count": 7,
+        "avg_score": 0.051746135954665005,
+        "total_score": 0.36222295168265506,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0300",
+            "clientId": "client_0",
+            "ip": "10.0.1.0",
+            "method": "GET",
+            "path": "/api/users/0",
+            "status": 204,
+            "score": 0.010742754464982518,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.011, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0301",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "GET",
+            "path": "/api/users/1",
+            "status": 200,
+            "score": 0.06293228478981872,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.063, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0302",
+            "clientId": "client_2",
+            "ip": "10.0.1.2",
+            "method": "GET",
+            "path": "/api/users/2",
+            "status": 204,
+            "score": 0.014828682943996863,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.015, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0303",
+            "clientId": "client_3",
+            "ip": "10.0.1.3",
+            "method": "GET",
+            "path": "/api/users/3",
+            "status": 204,
+            "score": 0.02156520964838793,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.022, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0304",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "GET",
+            "path": "/api/users/4",
+            "status": 201,
+            "score": 0.015802418268493712,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.016, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0305",
+            "clientId": "client_5",
+            "ip": "10.0.1.5",
+            "method": "POST",
+            "path": "/api/users/5",
+            "status": 204,
+            "score": 0.008626554713079937,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.009, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0014",
+            "clientId": "client_anomaly_14",
+            "ip": "192.168.1.114",
+            "method": "POST",
+            "path": "/api/secure/14",
+            "status": 401,
+            "score": 0.22772504685389539,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.228, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T07:00:00",
+        "anomaly_count": 4,
+        "avg_score": 0.011075252649662776,
+        "total_score": 0.0443010105986511,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0306",
+            "clientId": "client_6",
+            "ip": "10.0.1.6",
+            "method": "POST",
+            "path": "/api/users/6",
+            "status": 200,
+            "score": 0.0010112230512226983,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.001, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0307",
+            "clientId": "client_7",
+            "ip": "10.0.1.7",
+            "method": "GET",
+            "path": "/api/users/7",
+            "status": 201,
+            "score": 0.017850863145948526,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.018, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0308",
+            "clientId": "client_8",
+            "ip": "10.0.1.8",
+            "method": "GET",
+            "path": "/api/users/8",
+            "status": 201,
+            "score": 0.013048890368531851,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.013, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0309",
+            "clientId": "client_9",
+            "ip": "10.0.1.9",
+            "method": "GET",
+            "path": "/api/users/9",
+            "status": 200,
+            "score": 0.012390034032948027,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.012, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T08:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.22138215099154723,
+        "total_score": 0.22138215099154723,
+        "anomalies": [
+          {
+            "requestId": "req_anomaly_sparse_0006",
+            "clientId": "client_anomaly_6",
+            "ip": "192.168.1.106",
+            "method": "POST",
+            "path": "/api/secure/6",
+            "status": 401,
+            "score": 0.22138215099154723,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.221, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T09:00:00",
+        "anomaly_count": 3,
+        "avg_score": 0.016916392281684917,
+        "total_score": 0.050749176845054755,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0391",
+            "clientId": "client_1",
+            "ip": "10.0.1.91",
+            "method": "GET",
+            "path": "/api/users/91",
+            "status": 201,
+            "score": 0.011667094030402114,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.012, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0401",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "PUT",
+            "path": "/api/users/1",
+            "status": 201,
+            "score": 0.038015214790882434,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.038, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0404",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "GET",
+            "path": "/api/users/4",
+            "status": 204,
+            "score": 0.0010668680237702066,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.001, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T10:00:00",
+        "anomaly_count": 3,
+        "avg_score": 0.15759413295228986,
+        "total_score": 0.47278239885686957,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0431",
+            "clientId": "client_1",
+            "ip": "10.0.1.31",
+            "method": "PUT",
+            "path": "/api/users/31",
+            "status": 204,
+            "score": 0.014166463572454102,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.014, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0018",
+            "clientId": "client_anomaly_18",
+            "ip": "192.168.1.118",
+            "method": "POST",
+            "path": "/api/secure/18",
+            "status": 401,
+            "score": 0.22930796764220773,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.229, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0019",
+            "clientId": "client_anomaly_19",
+            "ip": "192.168.1.119",
+            "method": "POST",
+            "path": "/api/secure/19",
+            "status": 401,
+            "score": 0.22930796764220773,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.229, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T10:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.028418750223932254,
+        "total_score": 0.028418750223932254,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0471",
+            "clientId": "client_1",
+            "ip": "10.0.1.71",
+            "method": "GET",
+            "path": "/api/users/71",
+            "status": 204,
+            "score": 0.028418750223932254,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.028, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T11:00:00",
+        "anomaly_count": 1,
+        "avg_score": 0.016303255329195965,
+        "total_score": 0.016303255329195965,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0491",
+            "clientId": "client_1",
+            "ip": "10.0.1.91",
+            "method": "GET",
+            "path": "/api/users/91",
+            "status": 204,
+            "score": 0.016303255329195965,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.016, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T11:30:00",
+        "anomaly_count": 3,
+        "avg_score": 0.01859222573224169,
+        "total_score": 0.05577667719672508,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0501",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "GET",
+            "path": "/api/users/1",
+            "status": 201,
+            "score": 0.0473756348327552,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.047, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0509",
+            "clientId": "client_9",
+            "ip": "10.0.1.9",
+            "method": "GET",
+            "path": "/api/users/9",
+            "status": 201,
+            "score": 0.0017711159093291018,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.002, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0511",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 200,
+            "score": 0.006629926454640778,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.007, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T13:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.22136477374424024,
+        "total_score": 0.22136477374424024,
+        "anomalies": [
+          {
+            "requestId": "req_anomaly_sparse_0004",
+            "clientId": "client_anomaly_4",
+            "ip": "192.168.1.104",
+            "method": "POST",
+            "path": "/api/secure/4",
+            "status": 401,
+            "score": 0.22136477374424024,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.221, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T14:00:00",
+        "anomaly_count": 4,
+        "avg_score": 0.18122985626249974,
+        "total_score": 0.724919425049999,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0601",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "PUT",
+            "path": "/api/users/1",
+            "status": 201,
+            "score": 0.04906991365562019,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.049, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0000",
+            "clientId": "client_anomaly_0",
+            "ip": "192.168.1.100",
+            "method": "POST",
+            "path": "/api/secure/0",
+            "status": 401,
+            "score": 0.2192763942412611,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.219, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0007",
+            "clientId": "client_anomaly_7",
+            "ip": "192.168.1.107",
+            "method": "POST",
+            "path": "/api/secure/7",
+            "status": 401,
+            "score": 0.21823432203223914,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.218, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0015",
+            "clientId": "client_anomaly_15",
+            "ip": "192.168.1.115",
+            "method": "POST",
+            "path": "/api/secure/15",
+            "status": 401,
+            "score": 0.23833879512087852,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.238, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T15:30:00",
+        "anomaly_count": 1,
+        "avg_score": 4.029628877577629e-06,
+        "total_score": 4.029628877577629e-06,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0671",
+            "clientId": "client_1",
+            "ip": "10.0.1.71",
+            "method": "PUT",
+            "path": "/api/users/71",
+            "status": 204,
+            "score": 4.029628877577629e-06,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.000, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T16:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.0075068156397511965,
+        "total_score": 0.015013631279502393,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0681",
+            "clientId": "client_1",
+            "ip": "10.0.1.81",
+            "method": "PUT",
+            "path": "/api/users/81",
+            "status": 200,
+            "score": 0.010599485035594935,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.011, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0691",
+            "clientId": "client_1",
+            "ip": "10.0.1.91",
+            "method": "GET",
+            "path": "/api/users/91",
+            "status": 200,
+            "score": 0.0044141462439074575,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.004, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T16:30:00",
+        "anomaly_count": 3,
+        "avg_score": 0.027032574776801727,
+        "total_score": 0.08109772433040519,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0701",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "GET",
+            "path": "/api/users/1",
+            "status": 204,
+            "score": 0.05983677395078846,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.060, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0711",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 204,
+            "score": 0.01617627987051462,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.016, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0721",
+            "clientId": "client_1",
+            "ip": "10.0.1.21",
+            "method": "POST",
+            "path": "/api/users/21",
+            "status": 204,
+            "score": 0.005084670509102107,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.005, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T18:30:00",
+        "anomaly_count": 5,
+        "avg_score": 0.02893301198850935,
+        "total_score": 0.14466505994254675,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0801",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "PUT",
+            "path": "/api/users/1",
+            "status": 204,
+            "score": 0.07823959487362375,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.078, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0802",
+            "clientId": "client_2",
+            "ip": "10.0.1.2",
+            "method": "GET",
+            "path": "/api/users/2",
+            "status": 204,
+            "score": 0.019728361961787177,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.020, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0803",
+            "clientId": "client_3",
+            "ip": "10.0.1.3",
+            "method": "GET",
+            "path": "/api/users/3",
+            "status": 204,
+            "score": 0.027501745090044993,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.028, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0804",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "PUT",
+            "path": "/api/users/4",
+            "status": 200,
+            "score": 0.012277646470649883,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.012, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0805",
+            "clientId": "client_5",
+            "ip": "10.0.1.5",
+            "method": "PUT",
+            "path": "/api/users/5",
+            "status": 201,
+            "score": 0.006917711546440941,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.007, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T19:00:00",
+        "anomaly_count": 4,
+        "avg_score": 0.07759711222004276,
+        "total_score": 0.31038844888017103,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0806",
+            "clientId": "client_6",
+            "ip": "10.0.1.6",
+            "method": "GET",
+            "path": "/api/users/6",
+            "status": 201,
+            "score": 0.029585046710443375,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.030, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0807",
+            "clientId": "client_7",
+            "ip": "10.0.1.7",
+            "method": "GET",
+            "path": "/api/users/7",
+            "status": 201,
+            "score": 0.02253719281869171,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.023, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0809",
+            "clientId": "client_9",
+            "ip": "10.0.1.9",
+            "method": "GET",
+            "path": "/api/users/9",
+            "status": 204,
+            "score": 0.029407936290382852,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.029, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0005",
+            "clientId": "client_anomaly_5",
+            "ip": "192.168.1.105",
+            "method": "POST",
+            "path": "/api/secure/5",
+            "status": 401,
+            "score": 0.2288582730606531,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.229, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T19:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.006782787518498368,
+        "total_score": 0.006782787518498368,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0841",
+            "clientId": "client_1",
+            "ip": "10.0.1.41",
+            "method": "PUT",
+            "path": "/api/users/41",
+            "status": 204,
+            "score": 0.006782787518498368,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.007, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T20:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.013288696363709773,
+        "total_score": 0.026577392727419547,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0851",
+            "clientId": "client_1",
+            "ip": "10.0.1.51",
+            "method": "POST",
+            "path": "/api/users/51",
+            "status": 204,
+            "score": 0.009076734097309358,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.009, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0861",
+            "clientId": "client_1",
+            "ip": "10.0.1.61",
+            "method": "GET",
+            "path": "/api/users/61",
+            "status": 204,
+            "score": 0.01750065863011019,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.018, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T21:00:00",
+        "anomaly_count": 5,
+        "avg_score": 0.021647890629446342,
+        "total_score": 0.10823945314723171,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0891",
+            "clientId": "client_1",
+            "ip": "10.0.1.91",
+            "method": "POST",
+            "path": "/api/users/91",
+            "status": 204,
+            "score": 0.028905642245640184,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.029, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0900",
+            "clientId": "client_0",
+            "ip": "10.0.1.0",
+            "method": "GET",
+            "path": "/api/users/0",
+            "status": 200,
+            "score": 0.014125821110869796,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.014, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0901",
+            "clientId": "client_1",
+            "ip": "10.0.1.1",
+            "method": "POST",
+            "path": "/api/users/1",
+            "status": 201,
+            "score": 0.05150724513272564,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.052, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0903",
+            "clientId": "client_3",
+            "ip": "10.0.1.3",
+            "method": "POST",
+            "path": "/api/users/3",
+            "status": 204,
+            "score": 0.0009384162059281609,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.001, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0904",
+            "clientId": "client_4",
+            "ip": "10.0.1.4",
+            "method": "GET",
+            "path": "/api/users/4",
+            "status": 200,
+            "score": 0.012762328452067928,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.013, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T21:30:00",
+        "anomaly_count": 1,
+        "avg_score": 0.018115078994876077,
+        "total_score": 0.018115078994876077,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0911",
+            "clientId": "client_1",
+            "ip": "10.0.1.11",
+            "method": "GET",
+            "path": "/api/users/11",
+            "status": 200,
+            "score": 0.018115078994876077,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.018, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T22:00:00",
+        "anomaly_count": 2,
+        "avg_score": 0.13854803548882844,
+        "total_score": 0.27709607097765687,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0931",
+            "clientId": "client_1",
+            "ip": "10.0.1.31",
+            "method": "GET",
+            "path": "/api/users/31",
+            "status": 201,
+            "score": 0.04035850845737887,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.040, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0001",
+            "clientId": "client_anomaly_1",
+            "ip": "192.168.1.101",
+            "method": "POST",
+            "path": "/api/secure/1",
+            "status": 401,
+            "score": 0.236737562520278,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.237, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T22:30:00",
+        "anomaly_count": 4,
+        "avg_score": 0.13198508687733118,
+        "total_score": 0.5279403475093247,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0961",
+            "clientId": "client_1",
+            "ip": "10.0.1.61",
+            "method": "GET",
+            "path": "/api/users/61",
+            "status": 204,
+            "score": 0.023521935620726686,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.024, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Mudanças frequentes de endereços de IP (últimas 2 horas) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_normal_0971",
+            "clientId": "client_1",
+            "ip": "10.0.1.71",
+            "method": "PUT",
+            "path": "/api/users/71",
+            "status": 201,
+            "score": 0.015844600281084475,
+            "description": "Anomalia detectada: Acesso em fim de semana (Score: 0.016, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Mudanças frequentes de endereços de IP (últimas 2 horas) e Consumo através de 10 endereços de IP diferentes"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0009",
+            "clientId": "client_anomaly_9",
+            "ip": "192.168.1.109",
+            "method": "POST",
+            "path": "/api/secure/9",
+            "status": 401,
+            "score": 0.2404788339345626,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.240, Modelo: iforest)"
+          },
+          {
+            "requestId": "req_anomaly_sparse_0017",
+            "clientId": "client_anomaly_17",
+            "ip": "192.168.1.117",
+            "method": "POST",
+            "path": "/api/secure/17",
+            "status": 401,
+            "score": 0.24809497767295097,
+            "description": "Anomalia detectada: Acesso em fim de semana e Erro do cliente (401) (Score: 0.248, Modelo: iforest)"
+          }
+        ]
+      },
+      {
+        "timestamp": "2025-06-28T23:00:00",
+        "anomaly_count": 1,
+        "avg_score": 0.00748469402963281,
+        "total_score": 0.00748469402963281,
+        "anomalies": [
+          {
+            "requestId": "req_normal_0981",
+            "clientId": "client_1",
+            "ip": "10.0.1.81",
+            "method": "PUT",
+            "path": "/api/users/81",
+            "status": 200,
+            "score": 0.00748469402963281,
+            "description": "Anomalia detectada: Horário atípico (23h) e Acesso em fim de semana (Score: 0.007, Modelo: iforest)\nMudanças de endereços de IP suspeitas: Múltiplos endereços de IP usados (10 IPs diferentes) e Mudanças frequentes de endereços de IP (últimas 2 horas) e Consumo através de 10 endereços de IP diferentes"
+          }
+        ]
+      }
+    ],
+    "chart_data": {
+      "labels": [
+        "2025-06-27T23:30:00",
+        "2025-06-28T00:00:00",
+        "2025-06-28T00:30:00",
+        "2025-06-28T01:00:00",
+        "2025-06-28T01:30:00",
+        "2025-06-28T02:00:00",
+        "2025-06-28T02:30:00",
+        "2025-06-28T03:30:00",
+        "2025-06-28T04:00:00",
+        "2025-06-28T04:30:00",
+        "2025-06-28T05:00:00",
+        "2025-06-28T06:00:00",
+        "2025-06-28T06:30:00",
+        "2025-06-28T07:00:00",
+        "2025-06-28T08:30:00",
+        "2025-06-28T09:00:00",
+        "2025-06-28T10:00:00",
+        "2025-06-28T10:30:00",
+        "2025-06-28T11:00:00",
+        "2025-06-28T11:30:00",
+        "2025-06-28T13:30:00",
+        "2025-06-28T14:00:00",
+        "2025-06-28T15:30:00",
+        "2025-06-28T16:00:00",
+        "2025-06-28T16:30:00",
+        "2025-06-28T18:30:00",
+        "2025-06-28T19:00:00",
+        "2025-06-28T19:30:00",
+        "2025-06-28T20:00:00",
+        "2025-06-28T21:00:00",
+        "2025-06-28T21:30:00",
+        "2025-06-28T22:00:00",
+        "2025-06-28T22:30:00",
+        "2025-06-28T23:00:00"
+      ],
+      "datasets": [
+        {
+          "label": "Número de Anomalias",
+          "data": [
+            13,
+            2,
+            2,
+            2,
+            4,
+            9,
+            1,
+            1,
+            2,
+            3,
+            1,
+            3,
+            7,
+            4,
+            1,
+            3,
+            3,
+            1,
+            1,
+            3,
+            1,
+            4,
+            1,
+            2,
+            3,
+            5,
+            4,
+            1,
+            2,
+            5,
+            1,
+            2,
+            4,
+            1
+          ],
+          "borderColor": "#e74c3c",
+          "backgroundColor": "rgba(231, 76, 60, 0.1)",
+          "yAxisID": "y"
+        },
+        {
+          "label": "Score Médio",
+          "data": [
+            0.096,
+            0.011,
+            0.011,
+            0.015,
+            0.129,
+            0.025,
+            0.016,
+            0.225,
+            0.113,
+            0.099,
+            0.227,
+            0.151,
+            0.052,
+            0.011,
+            0.221,
+            0.017,
+            0.158,
+            0.028,
+            0.016,
+            0.019,
+            0.221,
+            0.181,
+            0.0,
+            0.008,
+            0.027,
+            0.029,
+            0.078,
+            0.007,
+            0.013,
+            0.022,
+            0.018,
+            0.139,
+            0.132,
+            0.007
+          ],
+          "borderColor": "#f39c12",
+          "backgroundColor": "rgba(243, 156, 18, 0.1)",
+          "yAxisID": "y1"
+        }
+      ]
+    },
+    "summary": {
+      "total_intervals": 34,
+      "max_anomalies_per_interval": 13,
+      "avg_anomalies_per_interval": 3.0,
+      "max_score": 0.22719812017703334,
+      "avg_score": 0.07421066602637169
+    }
+  }
+}
