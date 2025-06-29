@@ -338,7 +338,7 @@ async def train_description_model():
     """Treina o modelo de ML para geração de descrições"""
     try:
         from app.anomaly_description_ml import description_ml
-        from app.db import get_all_logs
+        from app.storage import get_all_logs
         
         # Obtém logs para treinamento
         logs = get_all_logs()
@@ -391,8 +391,23 @@ async def analyze_anomaly_patterns():
         if not anomalies:
             return {"message": "Nenhuma anomalia encontrada para análise"}
         
+        # Converte anomalias para formato compatível
+        anomalies_data = []
+        for anomaly in anomalies:
+            anomalies_data.append({
+                'requestId': anomaly.get('requestId', ''),
+                'clientId': anomaly.get('clientId', ''),
+                'ip': anomaly.get('ip', ''),
+                'apiId': anomaly.get('apiId', ''),
+                'method': anomaly.get('method', ''),
+                'path': anomaly.get('path', ''),
+                'status': anomaly.get('status', 0),
+                'timestamp': anomaly.get('timestamp', datetime.now().isoformat()),
+                'anomaly_score': anomaly.get('anomaly_score', 0)
+            })
+        
         # Analisa padrões
-        pattern_analysis = description_ml.analyze_patterns(anomalies)
+        pattern_analysis = description_ml.analyze_patterns(anomalies_data)
         
         return {
             "total_anomalies": len(anomalies),
@@ -411,7 +426,7 @@ async def generate_custom_description(request: dict):
     """Gera descrição personalizada para um log específico"""
     try:
         from app.anomaly_description_ml import description_ml
-        from app.db import get_all_logs
+        from app.storage import get_all_logs
         
         # Valida dados de entrada
         required_fields = ['requestId', 'clientId', 'ip', 'apiId', 'method', 'path', 'status', 'timestamp', 'score']

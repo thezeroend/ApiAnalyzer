@@ -45,7 +45,7 @@ class MLAnomalyDetector:
         
     def extract_features(self, logs: List[LogEntry]) -> pd.DataFrame:
         """
-        Extrai características dos logs para análise de anomalias
+        Extrai características dos logs para análise de anomalias com otimizações de performance
         
         Características extraídas:
         - Temporais: hora, dia da semana, minuto
@@ -58,72 +58,89 @@ class MLAnomalyDetector:
         if not logs:
             return pd.DataFrame()
         
-        features = []
+        # Otimização: Usar listas para construção mais rápida
+        features_data = {
+            'hour': [],
+            'day_of_week': [],
+            'minute': [],
+            'status_code': [],
+            'method_encoded': [],
+            'path_length': [],
+            'path_depth': [],
+            'ip_numeric': [],
+            'client_id_encoded': [],
+            'is_api_path': [],
+            'is_admin_path': [],
+            'is_auth_path': [],
+            'is_error': [],
+            'is_server_error': [],
+            'is_client_error': [],
+            'is_success': [],
+            'is_redirect': []
+        }
         
+        # Cache para codificação de métodos
+        method_cache = {}
+        
+        # Processar logs em lote
         for log in logs:
             # Características temporais
-            hour = log.timestamp.hour
-            day_of_week = log.timestamp.weekday()
-            minute = log.timestamp.minute
+            features_data['hour'].append(log.timestamp.hour)
+            features_data['day_of_week'].append(log.timestamp.weekday())
+            features_data['minute'].append(log.timestamp.minute)
             
             # Características da requisição
             status_code = log.status
-            method_encoded = self._encode_categorical('method', log.method)
+            features_data['status_code'].append(status_code)
+            
+            # Otimização: Cache para codificação de métodos
+            if log.method not in method_cache:
+                method_cache[log.method] = self._encode_categorical('method', log.method)
+            features_data['method_encoded'].append(method_cache[log.method])
+            
+            # Características do path
             path_length = len(log.path)
             path_depth = log.path.count('/')
+            features_data['path_length'].append(path_length)
+            features_data['path_depth'].append(path_depth)
             
-            # Características do IP
+            # Características do IP (otimizada)
             ip_parts = log.ip.split('.')
             ip_numeric = sum(int(part) * (256 ** (3-i)) for i, part in enumerate(ip_parts))
+            features_data['ip_numeric'].append(ip_numeric)
             
             # Características do cliente
             client_id_encoded = self._encode_categorical('clientId', log.clientId)
+            features_data['client_id_encoded'].append(client_id_encoded)
             
-            # Características do path
-            is_api_path = 1 if '/api/' in log.path else 0
-            is_admin_path = 1 if '/admin' in log.path else 0
-            is_auth_path = 1 if any(x in log.path.lower() for x in ['/login', '/auth', '/token']) else 0
+            # Características do path (otimizadas com operações booleanas)
+            path_lower = log.path.lower()
+            features_data['is_api_path'].append(1 if '/api/' in log.path else 0)
+            features_data['is_admin_path'].append(1 if '/admin' in log.path else 0)
+            features_data['is_auth_path'].append(1 if any(x in path_lower for x in ['/login', '/auth', '/token']) else 0)
             
-            # Características de erro
-            is_error = 1 if status_code >= 400 else 0
+            # Características de status (otimizadas)
             is_server_error = 1 if status_code >= 500 else 0
             is_client_error = 1 if 400 <= status_code < 500 else 0
-            
-            # Características de sucesso
             is_success = 1 if 200 <= status_code < 300 else 0
             is_redirect = 1 if 300 <= status_code < 400 else 0
             
             # Ajustar peso dos erros de servidor (não são anomalias do cliente)
-            # Reduzir o impacto dos erros de servidor nas features
             if is_server_error:
                 # Para erros de servidor, usar valores mais próximos do normal
-                status_code_normalized = 200  # Tratar como se fosse sucesso
+                features_data['status_code'][-1] = 200  # Tratar como se fosse sucesso
                 is_error = 0  # Não considerar como erro para análise de anomalia
             else:
-                status_code_normalized = status_code
+                is_error = 1 if status_code >= 400 else 0
             
-            feature_vector = [
-                hour, day_of_week, minute,
-                status_code_normalized, method_encoded, path_length, path_depth,
-                ip_numeric, client_id_encoded,
-                is_api_path, is_admin_path, is_auth_path,
-                is_error, is_server_error, is_client_error,
-                is_success, is_redirect
-            ]
-            
-            features.append(feature_vector)
+            features_data['is_error'].append(is_error)
+            features_data['is_server_error'].append(is_server_error)
+            features_data['is_client_error'].append(is_client_error)
+            features_data['is_success'].append(is_success)
+            features_data['is_redirect'].append(is_redirect)
         
-        # Criar DataFrame
-        feature_names = [
-            'hour', 'day_of_week', 'minute',
-            'status_code', 'method_encoded', 'path_length', 'path_depth',
-            'ip_numeric', 'client_id_encoded',
-            'is_api_path', 'is_admin_path', 'is_auth_path',
-            'is_error', 'is_server_error', 'is_client_error',
-            'is_success', 'is_redirect'
-        ]
-        
-        df = pd.DataFrame(features, columns=feature_names)
+        # Criar DataFrame de forma otimizada
+        df = pd.DataFrame(features_data)
         return df
     
     def _encode_categorical(self, field: str, value: str) -> int:
@@ -898,19 +915,25 @@ def train_ml_models(apiId: str = None, hours_back: int = 24, save_models: bool =
     except Exception as e:
         return {"error": f"Erro no treinamento: {str(e)}"}
 
-def detect_ml_anomalies(apiId: str = None, model_name: str = 'iforest', hours_back: int = 24, threshold: float = None) -> Dict:
+def detect_ml_anomalies(apiId: str = None, model_name: str = 'iforest', hours_back: int = 24, threshold: float = None, 
+                       batch_size: int = 10000, use_cache: bool = True) -> Dict:
     """
-    Detecta anomalias usando ML
+    Detecta anomalias usando ML com otimizações de performance
     
     Args:
         apiId: ID da API (None para todas)
         model_name: Nome do modelo a usar
         hours_back: Horas para trás para buscar logs
         threshold: Score mínimo para considerar como anomalia (opcional)
+        batch_size: Tamanho do lote para processamento (padrão: 10000)
+        use_cache: Se deve usar cache para otimização (padrão: True)
     
     Returns:
         Dict com anomalias detectadas
     """
+    import time
+    start_time = time.time()
+    
     try:
         # Obter threshold das configurações se não fornecido
         if threshold is None:
@@ -923,69 +946,164 @@ def detect_ml_anomalies(apiId: str = None, model_name: str = 'iforest', hours_ba
                 print(f"⚠️ Erro ao obter threshold das configurações: {e}")
                 threshold = 0.12  # Valor padrão
         
-        # Obter logs
+        # Cache para otimização
+        cache_key = f"{apiId}_{hours_back}_{model_name}_{threshold}"
+        if use_cache and hasattr(detect_ml_anomalies, '_cache') and cache_key in detect_ml_anomalies._cache:
+            cached_result = detect_ml_anomalies._cache[cache_key]
+            if time.time() - cached_result['timestamp'] < 300:  # Cache válido por 5 minutos
+                print(f"⚡ Usando cache para {cache_key}")
+                return cached_result['data']
+        
+        # Otimização 1: Filtro temporal otimizado no banco
+        print(f"📊 Buscando logs das últimas {hours_back} horas...")
+        cutoff_time = datetime.now() - timedelta(hours=hours_back)
+        
+        # Obter logs com filtro temporal otimizado
         if apiId:
-            logs = get_logs_by_api(apiId)
+            logs = get_logs_by_api(apiId, cutoff_time=cutoff_time)
         else:
-            logs = get_all_logs()
+            logs = get_all_logs(cutoff_time=cutoff_time)
         
         if not logs:
-            return {"error": "Nenhum log encontrado"}
-        
-        # Filtrar logs recentes
-        cutoff_time = datetime.now() - timedelta(hours=hours_back)
-        recent_logs = [log for log in logs if log.timestamp >= cutoff_time]
-        
-        if not recent_logs:
             return {"error": f"Nenhum log encontrado nas últimas {hours_back} horas"}
         
-        # Filtrar logs que já foram marcados com feedback
+        print(f"📈 {len(logs)} logs encontrados")
+        
+        # Otimização 2: Filtrar falsos positivos de forma otimizada
         from .feedback_system import feedback_system
         processed_false_positives = feedback_system.get_processed_false_positives(apiId)
         
         if processed_false_positives:
-            # Filtrar apenas logs que foram marcados como falsos positivos E processados
-            filtered_logs = [log for log in recent_logs if log.requestId not in processed_false_positives]
-            print(f"Filtrando {len(processed_false_positives)} falsos positivos processados. Restaram {len(filtered_logs)} logs para análise.")
+            # Usar set para busca O(1) em vez de lista O(n)
+            false_positives_set = set(processed_false_positives)
+            filtered_logs = [log for log in logs if log.requestId not in false_positives_set]
+            print(f"🔍 Filtrando {len(processed_false_positives)} falsos positivos. Restaram {len(filtered_logs)} logs.")
         else:
-            filtered_logs = recent_logs
-            print(f"Nenhum falso positivo processado encontrado. Analisando todos os {len(filtered_logs)} logs.")
+            filtered_logs = logs
+            print(f"✅ Nenhum falso positivo processado encontrado.")
         
         if not filtered_logs:
             return {
                 "error": "Todos os logs recentes foram marcados como falsos positivos processados",
-                "total_logs": len(recent_logs),
+                "total_logs": len(logs),
                 "processed_false_positives": len(processed_false_positives),
                 "logs_available": 0
             }
         
-        # Criar detector e carregar modelo treinado
+        # Otimização 3: Carregar modelo uma vez e reutilizar
         detector = MLAnomalyDetector()
         
-        # Tentar carregar modelo treinado
         if not detector.load_trained_model(model_name):
-            # Se não conseguir carregar, retornar erro em vez de treinar
             return {"error": f"Modelo {model_name} não encontrado. Execute o treinamento primeiro via endpoint /ml/train"}
         
-        # Verificar se o modelo específico está disponível
         if model_name not in detector.models:
             return {"error": f"Modelo {model_name} não está disponível. Modelos disponíveis: {list(detector.models.keys())}"}
         
-        # Detectar anomalias
-        result = detector.detect_anomalies(filtered_logs, model_name, threshold=threshold)
+        # Otimização 4: Processamento em lotes para grandes volumes
+        if len(filtered_logs) > batch_size:
+            print(f"🔄 Processando {len(filtered_logs)} logs em lotes de {batch_size}...")
+            result = _process_logs_in_batches(detector, filtered_logs, model_name, threshold, batch_size)
+        else:
+            # Processamento normal para volumes menores
+            result = detector.detect_anomalies(filtered_logs, model_name, threshold=threshold)
         
         if "error" not in result:
             result["logs_analyzed"] = len(filtered_logs)
-            result["total_logs"] = len(recent_logs)
+            result["total_logs"] = len(logs)
             result["processed_false_positives"] = len(processed_false_positives)
             result["logs_available"] = len(filtered_logs)
             result["time_range"] = f"Últimas {hours_back} horas"
             result["threshold_used"] = threshold
+            result["processing_time"] = round(time.time() - start_time, 2)
+            result["logs_per_second"] = round(len(filtered_logs) / (time.time() - start_time), 2) if (time.time() - start_time) > 0 else 0
         
+        # Salvar no cache
+        if use_cache:
+            if not hasattr(detect_ml_anomalies, '_cache'):
+                detect_ml_anomalies._cache = {}
+            detect_ml_anomalies._cache[cache_key] = {
+                'data': result,
+                'timestamp': time.time()
+            }
+            # Limpar cache antigo (manter apenas últimos 10 resultados)
+            if len(detect_ml_anomalies._cache) > 10:
+                oldest_key = min(detect_ml_anomalies._cache.keys(), 
+                               key=lambda k: detect_ml_anomalies._cache[k]['timestamp'])
+                del detect_ml_anomalies._cache[oldest_key]
+        
+        print(f"⏱️ Processamento concluído em {result.get('processing_time', 0)}s")
         return result
         
     except Exception as e:
         return {"error": f"Erro na detecção: {str(e)}"}
+
+def _process_logs_in_batches(detector, logs: List[LogEntry], model_name: str, threshold: float, batch_size: int) -> Dict:
+    """
+    Processa logs em lotes para otimizar performance com grandes volumes
+    """
+    import time
+    start_time = time.time()
+    
+    all_anomalies = []
+    all_normal_logs = []
+    total_anomaly_scores = []
+    
+    # Dividir logs em lotes
+    batches = [logs[i:i + batch_size] for i in range(0, len(logs), batch_size)]
+    
+    print(f"📦 Processando {len(batches)} lotes...")
+    
+    for i, batch in enumerate(batches):
+        batch_start = time.time()
+        print(f"  Lote {i+1}/{len(batches)}: {len(batch)} logs")
+        
+        # Processar lote
+        batch_result = detector.detect_anomalies(batch, model_name, threshold=threshold)
+        
+        if "error" in batch_result:
+            return batch_result
+        
+        # Acumular resultados
+        all_anomalies.extend(batch_result.get("anomalies", []))
+        all_normal_logs.extend(batch_result.get("normal_logs", []))
+        
+        # Acumular scores para estatísticas
+        for anomaly in batch_result.get("anomalies", []):
+            total_anomaly_scores.append(anomaly.get("anomaly_score", 0))
+        
+        batch_time = time.time() - batch_start
+        print(f"    ✅ Lote processado em {batch_time:.2f}s")
+    
+    # Calcular estatísticas finais
+    total_logs = len(logs)
+    anomalies_detected = len(all_anomalies)
+    anomaly_rate = (anomalies_detected / total_logs * 100) if total_logs > 0 else 0
+    
+    # Estatísticas dos scores
+    if total_anomaly_scores:
+        score_stats = {
+            "min": float(min(total_anomaly_scores)),
+            "max": float(max(total_anomaly_scores)),
+            "mean": float(sum(total_anomaly_scores) / len(total_anomaly_scores)),
+            "std": float((sum((x - sum(total_anomaly_scores) / len(total_anomaly_scores)) ** 2 for x in total_anomaly_scores) / len(total_anomaly_scores)) ** 0.5),
+            "median": float(sorted(total_anomaly_scores)[len(total_anomaly_scores) // 2])
+        }
+    else:
+        score_stats = {"min": 0, "max": 0, "mean": 0, "std": 0, "median": 0}
+    
+    return {
+        "model_used": model_name,
+        "logs_analyzed": total_logs,
+        "anomalies_detected": anomalies_detected,
+        "anomaly_rate": round(anomaly_rate, 2),
+        "score_statistics": score_stats,
+        "anomalies": all_anomalies,
+        "normal_logs": all_normal_logs,
+        "threshold_used": threshold,
+        "processing_time": round(time.time() - start_time, 2),
+        "batch_processing": True,
+        "batches_processed": len(batches)
+    }
 
 def compare_ml_models(apiId: str = None, hours_back: int = 24) -> Dict:
     """

@@ -416,12 +416,15 @@
     </div>
 
     <script>
+        // Defina o endereço base da API. Deixe vazio para mesmo host, ou coloque o endereço do backend, ex:
+        const API_BASE_URL = "http://localhost:8000";
+
         async function trainModel() {
             const statusDiv = document.getElementById('trainStatus');
             statusDiv.innerHTML = '<div class="loading">Treinando modelo...</div>';
             
             try {
-                const response = await fetch('/ml/descriptions/train', {
+                const response = await fetch(API_BASE_URL + '/ml/descriptions/train', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -463,7 +466,7 @@
             resultsDiv.style.display = 'none';
             
             try {
-                const response = await fetch('/ml/descriptions/analyze');
+                const response = await fetch(API_BASE_URL + '/ml/descriptions/analyze');
                 const result = await response.json();
                 
                 if (response.ok) {
@@ -591,7 +594,7 @@
             };
             
             try {
-                const response = await fetch('/ml/descriptions/generate', {
+                const response = await fetch(API_BASE_URL + '/ml/descriptions/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
